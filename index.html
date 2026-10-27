@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CS25C12 - Algorithms Course Portal with syllabus, interactive quizzes, learning resources, and assessment scheme." />
+  <title>CS25C12: Algorithms</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#overview" class="brand">
+        <span class="badge">CS25C12</span>
+        <span class="brand-text">Algorithms</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-menu" id="navMenu">
+        <a href="#overview" class="nav-link active">Overview</a>
+        <a href="#outcomes" class="nav-link">Outcomes</a>
+        <a href="#units" class="nav-link">Units</a>
+        <a href="#quiz" class="nav-link">Quiz Bank</a>
+        <a href="#assessment" class="nav-link">Assessment</a>
+        <a href="#resources" class="nav-link">Resources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero / Course Overview Section -->
+    <section id="overview" class="hero-section">
+      <div class="container hero-content">
+        <div class="hero-tag">Department of Computer Science & Engineering</div>
+        <h1>Algorithms <span class="accent-text">(CS25C12)</span></h1>
+        <p class="hero-desc">
+          Core undergraduate foundation focusing on algorithmic design techniques, mathematical performance analysis, dynamic programming, network flow, and tractability.
+        </p>
+        <div class="meta-strip">
+          <div class="meta-item">
+            <span class="meta-label">Structure (L-T-P-C)</span>
+            <span class="meta-value">3 – 0 – 0 – 3</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Total Units</span>
+            <span class="meta-value">6 Units</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Evaluation</span>
+            <span class="meta-value">40% Internal / 60% End-Sem</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Course Objectives & Outcomes -->
+    <section id="outcomes" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Objectives & Outcomes</h2>
+          <p>Target competencies and educational goals established for this course.</p>
+        </div>
+
+        <div class="card intro-card">
+          <h3>Course Objective</h3>
+          <p>
+            This course aims at providing the fundamentals of algorithm design and analysis and explains the concepts of the greedy method and dynamic programming. It also illustrates the methods of backtracking and branch-and-bound techniques to solve computational problems.
+          </p>
+        </div>
+
+        <div class="grid co-grid">
+          <div class="co-card">
+            <div class="co-id">CO1</div>
+            <p>Describe fundamental concepts of algorithms for solving computational problems.</p>
+          </div>
+          <div class="co-card">
+            <div class="co-id">CO2</div>
+            <p>Analyze various algorithmic approaches and dynamic programming to understand their efficiency and applicability.</p>
+          </div>
+          <div class="co-card">
+            <div class="co-id">CO3</div>
+            <p>Evaluate algorithms based on time and space complexity to determine effectiveness for different problem scenarios.</p>
+          </div>
+          <div class="co-card">
+            <div class="co-id">CO4</div>
+            <p>Design appropriate design paradigms and optimization techniques to solve real-world computational problems.</p>
+          </div>
+          <div class="co-card span-two">
+            <div class="co-id">CO5</div>
+            <p>Develop the ability to apply advanced algorithmic techniques through continuous self-learning.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Syllabus Units (Accordions) -->
+    <section id="units" class="section bg-light">
+      <div class="container">
+        <div class="section-header">
+          <h2>Syllabus & Learning Modules</h2>
+          <p>Unit-wise breakdown of foundational and advanced algorithm concepts.</p>
+        </div>
+
+        <div class="accordion-group">
+          <!-- Unit 1 -->
+          <article class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+              <span class="unit-num">Unit I</span>
+              <span class="unit-title">Foundations of Algorithm Analysis</span>
+              <span class="chevron"></span>
+            </button>
+            <div class="accordion-panel">
+              <ul class="topic-list">
+                <li>Performance analysis: space complexity, time complexity.</li>
+                <li>Asymptotic notation: Big O, Omega, Theta, and little-o notation.</li>
+                <li>Recurrence relations and methods of analyzing recurrences.</li>
+                <li>Probabilistic analysis.</li>
+                <li><strong>Practice:</strong> Determine time/space complexity for loops, conditionals, and given logic.</li>
+              </ul>
+              <div class="activity-box">
+                <strong>Suggested Activity:</strong> Assignment on time/space complexity calculation for given code logic.
+              </div>
+            </div>
+          </article>
+
+          <!-- Unit 2 -->
+          <article class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+              <span class="unit-num">Unit II</span>
+              <span class="unit-title">Divide and Conquer Methods</span>
+              <span class="chevron"></span>
+            </button>
+            <div class="accordion-panel">
+              <ul class="topic-list">
+                <li>Divide-and-conquer design paradigm & core concepts.</li>
+                <li>Merge sort and its formal recurrence analysis.</li>
+                <li>Long integer multiplication.</li>
+                <li>Strassen’s matrix multiplication.</li>
+                <li>Master method for solving recurrence equations.</li>
+                <li>Job Sequencing Problem with Deadlines.</li>
+              </ul>
+              <div class="activity-box">
+                <strong>Suggested Activity:</strong> Flipped-classroom puzzle session and review of relevant GATE questions.
+              </div>
+            </div>
+          </article>
+
+          <!-- Unit 3 -->
+          <article class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+              <span class="unit-num">Unit III</span>
+              <span class="unit-title">Greedy Methods and Dynamic Programming</span>
+              <span class="chevron"></span>
+            </button>
+            <div class="accordion-panel">
+              <ul class="topic-list">
+                <li>Greedy choice properties & optimal substructure.</li>
+                <li>Activity Selection Problem, Huffman Codes, and Fractional Knapsack.</li>
+                <li>Dynamic Programming formulation and state-transition recurrence relations.</li>
+                <li>0–1 Knapsack and Matrix Chain Multiplication.</li>
+                <li>Optimal Binary Search Tree (OBST) and Longest Common Subsequence (LCS).</li>
+                <li>Space-optimization techniques in multi-stage graphs.</li>
+              </ul>
+              <div class="activity-box">
+                <strong>Suggested Activity:</strong> Project-based experiential learning via treasure-hunt problem solving; state-transition quiz.
+              </div>
+            </div>
+          </article>
+
+          <!-- Unit 4 -->
+          <article class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+              <span class="unit-num">Unit IV</span>
+              <span class="unit-title">String Matching and Convex Hull Algorithms</span>
+              <span class="chevron"></span>
+            </button>
+            <div class="accordion-panel">
+              <ul class="topic-list">
+                <li>Multithreaded algorithm architectures and parallel models.</li>
+                <li>Polynomial multiplication and Fast Fourier Transform (FFT).</li>
+                <li>Extended Euclid Algorithm (gcd and Bézout coefficients).</li>
+                <li>Naïve string matching and Rabin–Karp algorithm (rolling hashes).</li>
+                <li>Computational geometry & Convex Hull: Graham’s Scan and Jarvis March.</li>
+              </ul>
+              <div class="activity-box">
+                <strong>Suggested Activity:</strong> Implementation assignment on Rabin–Karp string search; quiz on Euclid & FFT algorithms.
+              </div>
+            </div>
+          </article>
+
+          <!-- Unit 5 -->
+          <article class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+              <span class="unit-num">Unit V</span>
+              <span class="unit-title">Solvability and Tractability</span>
+              <span class="chevron"></span>
+            </button>
+            <div class="accordion-panel">
+              <ul class="topic-list">
+                <li>Complexity classes: P, NP, NP-Hard, and NP-Complete.</li>
+                <li>Classic NP-Complete problems: Vertex-Cover, TSP, Set-Covering, Subset-Sum.</li>
+                <li>Backtracking & Branch-and-Bound: N-Queen Problem, Graph Coloring, Hamiltonian Cycle.</li>
+                <li>Assignment Problem, Knapsack Problem variations.</li>
+                <li>Introduction to Approximation and Randomized Algorithms.</li>
+              </ul>
+              <div class="activity-box">
+                <strong>Suggested Activity:</strong> Case assignment on approximation heuristics and analysis of GATE tractability questions.
+              </div>
+            </div>
+          </article>
+
+          <!-- Unit 6 -->
+          <article class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+              <span class="unit-num">Unit VI</span>
+              <span class="unit-title">Network Flow Algorithms</span>
+              <span class="chevron"></span>
+            </button>
+            <div class="accordion-panel">
+              <ul class="topic-list">
+                <li>Flow networks, source-sink formulations, and residual networks.</li>
+                <li>Maximum Flow: Ford–Fulkerson method and Edmonds–Karp algorithm.</li>
+                <li>Push–Relabel and Relabel-to-Front algorithms.</li>
+                <li>Minimum-Cost Flows and Cycle-Cancelling algorithm.</li>
+              </ul>
+              <div class="activity-box">
+                <strong>Suggested Activity:</strong> Flipped classroom on Push-Relabel mechanics; review of GATE network flow problems.
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Quiz Bank -->
+    <section id="quiz" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Formative Quiz Bank</h2>
+          <p>Select a unit to test your conceptual clarity with immediate validation.</p>
+        </div>
+
+        <div class="quiz-controls">
+          <label for="unitSelect">Select Module:</label>
+          <select id="unitSelect" class="form-select">
+            <option value="unit1">Unit I: Foundations of Analysis</option>
+            <option value="unit2">Unit II: Divide and Conquer</option>
+            <option value="unit3">Unit III: Greedy & DP</option>
+            <option value="unit4">Unit IV: Strings & Convex Hull</option>
+            <option value="unit5">Unit V: Tractability & P/NP</option>
+            <option value="unit6">Unit VI: Network Flow</option>
+          </select>
+        </div>
+
+        <div id="quizContainer" class="quiz-container">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Assessment Scheme Section -->
+    <section id="assessment" class="section bg-light">
+      <div class="container">
+        <div class="section-header">
+          <h2>Evaluation & Grading Scheme</h2>
+          <p>Distribution of Continuous Assessment and End-Semester Examination.</p>
+        </div>
+
+        <div class="grid assessment-grid">
+          <div class="card stat-card">
+            <div class="stat-num">40%</div>
+            <div class="stat-title">Continuous Internal Assessment</div>
+            <p>Composed of continuous activities (30%) and two Internal Assessment Tests (70%).</p>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-num">60%</div>
+            <div class="stat-title">End Semester Examination</div>
+            <p>Comprehensive university theoretical examination covering all six units.</p>
+          </div>
+        </div>
+
+        <div class="card table-card">
+          <h3>Continuous Assessment Activity Breakdown</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Assessment Component</th>
+                  <th>Mode / Description</th>
+                  <th>Weight (Marks)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Assignments</td>
+                  <td>Analytical problem solving & complexity bounds</td>
+                  <td><strong>30</strong></td>
+                </tr>
+                <tr>
+                  <td>GATE Question Review</td>
+                  <td>Solving and reviewing past competitive GATE questions</td>
+                  <td><strong>25</strong></td>
+                </tr>
+                <tr>
+                  <td>Project-Based Learning</td>
+                  <td>Treasure hunt problem modeling & algorithmic coding</td>
+                  <td><strong>25</strong></td>
+                </tr>
+                <tr>
+                  <td>Formative Quizzes</td>
+                  <td>State-transitions, asymptotic analysis, Euclid & FFT</td>
+                  <td><strong>10</strong></td>
+                </tr>
+                <tr>
+                  <td>Flipped Classroom</td>
+                  <td>Interactive seminar on Relabel and divide-and-conquer</td>
+                  <td><strong>10</strong></td>
+                </tr>
+                <tr class="highlight-row">
+                  <td colspan="2"><strong>Total Activity Mark Base</strong></td>
+                  <td><strong>100 Marks</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- References & External Resources -->
+    <section id="resources" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>References & Study Resources</h2>
+          <p>Prescribed standard textbooks, online MOOCs, and examination papers.</p>
+        </div>
+
+        <div class="grid reference-grid">
+          <div class="card">
+            <h3>Standard Textbooks</h3>
+            <ul class="book-list">
+              <li>
+                <strong>Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein</strong>
+                <span>Introduction to Algorithms, 4th/Current Edition, MIT Press, 2022.</span>
+              </li>
+              <li>
+                <strong>Anany Levitin</strong>
+                <span>Introduction to the Design and Analysis of Algorithms, 3rd Edition, Pearson, 2014.</span>
+              </li>
+              <li>
+                <strong>Ellis Horowitz, Sartaj Sahni, Sanguthevar Rajasekaran</strong>
+                <span>Computer Algorithms / C++, 2nd Edition, Universities Press, 2007.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Video Lectures (NPTEL / MIT)</h3>
+            <ul class="resource-links">
+              <li>
+                <a href="https://nptel.ac.in/courses/106101060" target="_blank" rel="noopener noreferrer">
+                  NPTEL – Design & Analysis of Algorithms (IIT Bombay)
+                </a>
+                <span>Covers divide & conquer, greedy, DP, NP-completeness.</span>
+              </li>
+              <li>
+                <a href="https://nptel.ac.in/courses/106106131" target="_blank" rel="noopener noreferrer">
+                  NPTEL – Design & Analysis of Algorithms (CMI)
+                </a>
+                <span>Asymptotic complexity, network flows, and P/NP.</span>
+              </li>
+              <li>
+                <a href="https://nptel.ac.in/courses/106105157" target="_blank" rel="noopener noreferrer">
+                  NPTEL – Fundamental Algorithms (IIT Kharagpur)
+                </a>
+                <span>Recurrences, computational geometry, graph algorithms.</span>
+              </li>
+              <li>
+                <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener noreferrer">
+                  MIT OpenCourseWare (6.006)
+                </a>
+                <span>Full lecture series, problem sets, and recitations.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card callout-box">
+          <h3>Anna University Question Paper Archive</h3>
+          <p>
+            CS25C12 aligns closely with previous Anna University Regulation syllabus <strong>CS3401 (Algorithms)</strong>. For model questions and university exam practice, explore:
+          </p>
+          <div class="links-row">
+            <a href="https://library.annauniv.edu/qbank_cs.php" target="_blank" class="btn btn-outline" rel="noopener noreferrer">AU Official Question Bank</a>
+            <a href="https://stannescet.ac.in/cms/web/Student_University_Qpaper.php" target="_blank" class="btn btn-outline" rel="noopener noreferrer">St. Anne's CET Archive</a>
+            <a href="https://edu.smartfigure.in/department/cse/" target="_blank" class="btn btn-outline" rel="noopener noreferrer">SmartFigure AU CSE Papers</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>Course Code: <strong>CS25C12 — Algorithms</strong> | Regulation & Syllabus Repository</p>
+      <p class="copyright">&copy; Designed for Academic Hosting on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

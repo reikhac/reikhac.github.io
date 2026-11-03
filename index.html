@@ -369,48 +369,76 @@
       </div>
     </section>
 
-    <!-- Algorithm Lab -->
-    <section id="algorithm-lab" class="section">
+    <!-- Interactive Algorithm Studio -->
+    <section id="algorithm-lab" class="section algorithm-studio">
       <div class="container">
-        <div class="section-header">
-          <h2>Algorithm Lab</h2>
-          <p>Experiment, predict, execute, and explain the algorithmic decisions.</p>
+        <div class="section-header lab-section-heading">
+          <span class="lab-eyebrow">LEARN BY DOING</span>
+          <h2>Algorithm Lab <span class="lab-heading-mark">/</span> Interactive Studio</h2>
+          <p>Turn algorithm concepts into experiments. Change inputs, observe each decision, and build confidence through practice.</p>
         </div>
+
+        <div class="lab-welcome-strip">
+          <div class="lab-welcome-icon">⌘</div>
+          <div><strong>Your virtual practice space</strong><span>Two hands-on challenges · Instant feedback · Learn at your own pace</span></div>
+          <span class="lab-live-tag"><i></i> INTERACTIVE</span>
+        </div>
+
         <div class="lab-grid">
-          <article class="card lab-card">
-            <h3>Bubble Sort Visualiser</h3>
-            <p>Watch adjacent comparisons and swaps. Predict the next move, then step through each operation.</p>
-            <div class="sort-toolbar">
-              <label for="sortInput">Values (comma-separated)</label>
-              <input id="sortInput" value="8, 3, 5, 1, 9, 2" aria-label="Values to sort">
-              <button class="btn btn-primary" id="sortLoad">Load values</button>
+          <article class="card lab-card lab-sort-card">
+            <div class="lab-card-top">
+              <div class="lab-icon sort-icon">↕</div>
+              <div><span class="lab-kicker">CHALLENGE 01 · SORTING</span><h3>Bubble Sort Visualiser</h3></div>
+              <span class="lab-level">Beginner</span>
             </div>
-            <div id="sortBars" class="sort-bars" aria-live="polite"></div>
-            <div id="sortStatus" class="lab-status">Ready. Click Next comparison to begin.</div>
+            <p class="lab-intro">See how neighbouring elements are compared and swapped until the list is in ascending order.</p>
+            <div class="lab-learning-row"><span>🎯 <b>Learning goal</b></span><span>Trace comparisons, swaps and passes</span></div>
+            <div class="sort-toolbar lab-input-area">
+              <label for="sortInput">YOUR DATA SET <small>Enter 2–14 whole numbers, separated by commas</small></label>
+              <div class="lab-input-line"><input id="sortInput" value="8, 3, 5, 1, 9, 2" aria-label="Values to sort"><button class="btn btn-primary" id="sortLoad">Load data ↗</button></div>
+            </div>
+            <div class="visual-stage">
+              <div class="visual-stage-head"><span>ARRAY VISUALISATION</span><span class="visual-stage-note">Live step-by-step view</span></div>
+              <div id="sortBars" class="sort-bars" aria-live="polite"></div>
+              <div class="sort-legend"><span><i class="legend-blue"></i>Unsorted</span><span><i class="legend-amber"></i>Comparing</span><span><i class="legend-green"></i>Sorted</span></div>
+            </div>
+            <div class="lab-metrics"><div><small>COMPARISONS</small><strong id="sortComparisons">0</strong></div><div><small>SWAPS</small><strong id="sortSwaps">0</strong></div><div><small>PASS</small><strong id="sortPassCount">0</strong></div></div>
+            <div id="sortStatus" class="lab-status" aria-live="polite">Ready when you are. Select “Next comparison” to begin.</div>
             <div class="lab-actions">
               <button class="btn btn-outline" id="sortStep">Next comparison</button>
-              <button class="btn btn-outline" id="sortPass">Finish pass</button>
-              <button class="btn btn-primary" id="sortAuto">Run to completion</button>
-              <button class="btn btn-outline" id="sortReset">Reset</button>
+              <button class="btn btn-outline" id="sortPass">Complete pass</button>
+              <button class="btn btn-primary" id="sortAuto">▶ Run all</button>
+              <button class="btn btn-quiet" id="sortReset">↺ Reset</button>
             </div>
-            <p class="lab-hint">Learning check: Why does the largest unsorted value move to the end after one complete pass?</p>
+            <div class="lab-question"><b>Think like an algorithm designer</b><p>Why is the largest unsorted value guaranteed to move to the end after one complete pass?</p></div>
           </article>
-          <article class="card lab-card">
-            <h3>Dijkstra’s Shortest Path – Mission Game</h3>
-            <p>Mission: deliver a data packet from Start (A) to Destination (F) at minimum total cost. Select the next unvisited node with the smallest tentative distance.</p>
-            <div class="game-stats"><span>Mission: <strong>Network Rescue</strong></span><span>Score: <strong id="dijkstraScore">0</strong></span><span>Moves: <strong id="dijkstraMoves">0</strong></span></div>
-            <div id="graphBoard" class="graph-board" aria-label="Weighted graph network"></div>
-            <div class="distance-panel" id="distancePanel"></div>
-            <div class="game-actions">
-              <label for="nextNode">Choose next node</label>
-              <select id="nextNode" class="form-select"><option value="">Select node</option></select>
-              <button class="btn btn-primary" id="dijkstraChoose">Confirm choice</button>
-              <button class="btn btn-outline" id="dijkstraReset">Restart mission</button>
+
+          <article class="card lab-card lab-dijkstra-card">
+            <div class="lab-card-top">
+              <div class="lab-icon path-icon">⌁</div>
+              <div><span class="lab-kicker">CHALLENGE 02 · GRAPH ALGORITHMS</span><h3>Dijkstra’s Path Quest</h3></div>
+              <span class="lab-level lab-level-advanced">Strategic</span>
             </div>
-            <div id="dijkstraFeedback" class="lab-status" aria-live="polite">Start at A. Its tentative distance is 0; all others are infinity.</div>
-            <p class="lab-hint">Rule: Dijkstra’s algorithm requires non-negative edge weights. Relax each edge from the selected node.</p>
+            <p class="lab-intro">Guide a data packet from node A to node F. Choose the unvisited node with the smallest tentative distance to earn points.</p>
+            <div class="mission-banner"><span class="mission-symbol">✦</span><div><b>MISSION: NETWORK RESCUE</b><small>Find the minimum-cost route from A to F</small></div><span class="mission-target">A&nbsp; → &nbsp;F</span></div>
+            <div class="game-stats"><span><small>YOUR SCORE</small><strong id="dijkstraScore">0</strong></span><span><small>ATTEMPTS</small><strong id="dijkstraMoves">0</strong></span><span><small>DESTINATION</small><strong>Node F</strong></span></div>
+            <div class="graph-stage">
+              <div class="visual-stage-head"><span>WEIGHTED NETWORK</span><span class="visual-stage-note">Edge labels = cost</span></div>
+              <div id="graphBoard" class="graph-board" aria-label="Weighted graph network"></div>
+              <div class="graph-legend"><span><i class="node-unvisited"></i>Unvisited</span><span><i class="node-visited"></i>Visited</span><span><i class="node-current"></i>Current choice</span></div>
+            </div>
+            <div class="distance-heading"><b>Distance tracker</b><span>∞ = not reached yet</span></div>
+            <div class="distance-panel" id="distancePanel"></div>
+            <div class="game-actions lab-game-controls">
+              <label for="nextNode">STEP 1 · Choose the next node</label>
+              <div class="lab-input-line"><select id="nextNode" class="form-select"><option value="">Select node</option></select><button class="btn btn-primary" id="dijkstraChoose">Confirm choice</button></div>
+              <button class="btn btn-quiet" id="dijkstraReset">↺ Restart mission</button>
+            </div>
+            <div id="dijkstraFeedback" class="lab-status" aria-live="polite">Start at A (distance 0). Choose the unvisited node with the smallest tentative distance.</div>
+            <div class="lab-question"><b>Mission rule</b><p>After selecting a node, update its neighbours by relaxing edges. Dijkstra’s algorithm assumes all edge weights are non-negative.</p></div>
           </article>
         </div>
+        <div class="lab-footer-note"><span>💡</span><p><b>Suggested practice:</b> Predict the next operation before clicking. After each activity, explain the algorithm’s strategy and its time complexity in your own words.</p></div>
       </div>
     </section>
 

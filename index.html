@@ -29,6 +29,9 @@
         <a href="#quiz" class="nav-link">Quiz Bank</a>
         <a href="#assessment" class="nav-link">Assessment</a>
         <a href="#resources" class="nav-link">Resources</a>
+        <a href="#schedule" class="nav-link">Weekly Schedule</a>
+        <a href="#algorithm-lab" class="nav-link">Algorithm Lab</a>
+        <a href="#exit-ticket" class="nav-link">Exit Ticket</a>
       </nav>
     </div>
   </header>
@@ -328,6 +331,109 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Weekly Schedule -->
+    <section id="schedule" class="section bg-light">
+      <div class="container">
+        <div class="section-header">
+          <h2>Weekly Learning Schedule</h2>
+          <p>Suggested 14-week learning sequence for CS25C12 – Algorithms. Adjust session dates to the department timetable.</p>
+        </div>
+        <div class="table-responsive card table-card">
+          <table class="data-table">
+            <thead><tr><th>Week</th><th>Unit</th><th>Focus Areas</th><th>Learning Activity / Evidence</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>I</td><td>Algorithm fundamentals; time and space complexity</td><td>Code-tracing and complexity worksheet</td></tr>
+              <tr><td>2</td><td>I</td><td>O, Ω, Θ, little-o; recurrence relations</td><td>Asymptotic comparison and recurrence practice</td></tr>
+              <tr><td>3</td><td>I–II</td><td>Probabilistic analysis; divide-and-conquer framework</td><td>Problem decomposition activity</td></tr>
+              <tr><td>4</td><td>II</td><td>Merge sort; long integer multiplication</td><td>Sorting trace and recurrence analysis</td></tr>
+              <tr><td>5</td><td>II</td><td>Strassen’s multiplication; Master method; job sequencing</td><td>Worked problems and unit formative quiz</td></tr>
+              <tr><td>6</td><td>III</td><td>Greedy choice; activity selection; Huffman coding</td><td>Greedy strategy challenge</td></tr>
+              <tr><td>7</td><td>III</td><td>Fractional knapsack; DP formulation; 0–1 knapsack</td><td>Compare greedy and DP solutions</td></tr>
+              <tr><td>8</td><td>III</td><td>Matrix-chain multiplication; OBST; LCS; multistage graphs</td><td>DP table construction and formative quiz</td></tr>
+              <tr><td>9</td><td>IV</td><td>Multithreaded models; polynomial multiplication; FFT</td><td>FFT concept map and numerical exercise</td></tr>
+              <tr><td>10</td><td>IV</td><td>Extended Euclid; naïve matching; Rabin–Karp</td><td>String-matching lab exercise</td></tr>
+              <tr><td>11</td><td>IV</td><td>Convex hull; Graham’s Scan; Jarvis March</td><td>Computational geometry case study</td></tr>
+              <tr><td>12</td><td>V</td><td>P, NP, NP-Hard, NP-Complete; reductions</td><td>Complexity-classification activity</td></tr>
+              <tr><td>13</td><td>V–VI</td><td>Backtracking, branch-and-bound; flow networks</td><td>N-Queen / graph colouring and flow modelling</td></tr>
+              <tr><td>14</td><td>VI</td><td>Ford–Fulkerson, Edmonds–Karp, Push–Relabel, min-cost flow</td><td>Maximum-flow challenge, revision and course reflection</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="schedule-note">This is a topic sequence, not a dated institutional timetable. Enter the approved class dates and periods before sharing it as an official schedule.</p>
+      </div>
+    </section>
+
+    <!-- Algorithm Lab -->
+    <section id="algorithm-lab" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Algorithm Lab</h2>
+          <p>Experiment, predict, execute, and explain the algorithmic decisions.</p>
+        </div>
+        <div class="lab-grid">
+          <article class="card lab-card">
+            <h3>Bubble Sort Visualiser</h3>
+            <p>Watch adjacent comparisons and swaps. Predict the next move, then step through each operation.</p>
+            <div class="sort-toolbar">
+              <label for="sortInput">Values (comma-separated)</label>
+              <input id="sortInput" value="8, 3, 5, 1, 9, 2" aria-label="Values to sort">
+              <button class="btn btn-primary" id="sortLoad">Load values</button>
+            </div>
+            <div id="sortBars" class="sort-bars" aria-live="polite"></div>
+            <div id="sortStatus" class="lab-status">Ready. Click Next comparison to begin.</div>
+            <div class="lab-actions">
+              <button class="btn btn-outline" id="sortStep">Next comparison</button>
+              <button class="btn btn-outline" id="sortPass">Finish pass</button>
+              <button class="btn btn-primary" id="sortAuto">Run to completion</button>
+              <button class="btn btn-outline" id="sortReset">Reset</button>
+            </div>
+            <p class="lab-hint">Learning check: Why does the largest unsorted value move to the end after one complete pass?</p>
+          </article>
+          <article class="card lab-card">
+            <h3>Dijkstra’s Shortest Path – Mission Game</h3>
+            <p>Mission: deliver a data packet from Start (A) to Destination (F) at minimum total cost. Select the next unvisited node with the smallest tentative distance.</p>
+            <div class="game-stats"><span>Mission: <strong>Network Rescue</strong></span><span>Score: <strong id="dijkstraScore">0</strong></span><span>Moves: <strong id="dijkstraMoves">0</strong></span></div>
+            <div id="graphBoard" class="graph-board" aria-label="Weighted graph network"></div>
+            <div class="distance-panel" id="distancePanel"></div>
+            <div class="game-actions">
+              <label for="nextNode">Choose next node</label>
+              <select id="nextNode" class="form-select"><option value="">Select node</option></select>
+              <button class="btn btn-primary" id="dijkstraChoose">Confirm choice</button>
+              <button class="btn btn-outline" id="dijkstraReset">Restart mission</button>
+            </div>
+            <div id="dijkstraFeedback" class="lab-status" aria-live="polite">Start at A. Its tentative distance is 0; all others are infinity.</div>
+            <p class="lab-hint">Rule: Dijkstra’s algorithm requires non-negative edge weights. Relax each edge from the selected node.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Daily Exit Ticket Response Dashboard -->
+    <section id="exit-ticket" class="section bg-light">
+      <div class="container">
+        <div class="section-header">
+          <h2>Daily Exit Ticket – Response Insights</h2>
+          <p>Review student understanding, common doubts, and class feedback by year and course.</p>
+        </div>
+        <div class="card exit-ticket-card">
+          <div class="exit-ticket-toolbar">
+            <div><strong>Response dashboard</strong><p id="exitTicketUpdated">Awaiting a connected, privacy-safe response feed.</p></div>
+            <button class="btn btn-outline" id="refreshExitTicket">Refresh responses</button>
+          </div>
+          <div id="exitTicketSummary" class="exit-ticket-summary">
+            <p>Connect the Google Apps Script response-summary endpoint to display the latest aggregated responses. Individual student names and raw comments should not be published on this public course website.</p>
+          </div>
+          <div class="exit-ticket-config">
+            <label for="exitTicketEndpoint">Published Apps Script Web App URL</label>
+            <input id="exitTicketEndpoint" type="url" placeholder="Paste the deployed HTTPS Web App URL">
+            <button class="btn btn-primary" id="saveExitTicketEndpoint">Connect response feed</button>
+            <small>The URL is stored in this browser only. The endpoint should return aggregated counts, average ratings, and anonymised theme summaries—not identifiable student data.</small>
           </div>
         </div>
       </div>

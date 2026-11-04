@@ -32,8 +32,8 @@
         <a href="#schedule" class="nav-link">Weekly Schedule</a>
         <a href="#algorithm-lab" class="nav-link">Algorithm Lab</a>
         <a href="#exit-ticket" class="nav-link">Exit Ticket</a>
-        <a href="#assignment-agent" class="nav-link">Assignment Agent</a>
-        <a href="#student-corner" class="nav-link">Student Corner</a>
+        <a href="#faculty-dashboard" class="nav-link">Faculty Dashboard</a>
+        <a href="#student-dashboard" class="nav-link">Student Dashboard</a>
       </nav>
     </div>
   </header>
@@ -546,21 +546,61 @@
       </div>
     </section>
 
-    <!-- KCET Assignment & Learning Agent -->
-    <section id="assignment-agent" class="section bg-light">
+    <!-- KCET Faculty Dashboard -->
+    <section id="faculty-dashboard" class="section bg-light">
       <div class="container">
         <div class="section-header">
-          <h2>KCET Assignment &amp; Learning Agent</h2>
-          <p>A dedicated workspace for faculty assignment publishing, student submissions and faculty-approved results.</p>
+          <h2>Faculty Dashboard – Assignment Management &amp; Assessment</h2>
+          <p>One shared Faculty PIN provides access to assignment publishing, submission review, assessment and result release.</p>
         </div>
-        <div class="agent-notice"><strong>Student access:</strong> Students can view active assignments, submit their work and check released results using their private receipt code. Faculty tools are provided separately below.</div>
+        <div class="agent-notice"><strong>Faculty access:</strong> Enter the shared PIN once. The same access covers posting assignments, reviewing submissions and publishing marks. No separate sign-in is required.</div>
+        <div id="facultyLoginPanel" class="card faculty-panel">
+          <label for="facultyPassword">Shared Faculty PIN</label>
+          <div class="agent-inline">
+            <input id="facultyPassword" type="password" autocomplete="off" placeholder="Enter the shared Faculty PIN">
+            <button class="btn btn-primary" id="facultyLogin" type="button">Open Faculty Dashboard</button>
+          </div>
+          <p id="facultyStatus" class="agent-status" role="status" aria-live="polite">Enter the PIN to open faculty tools.</p>
+        </div>
+        <div id="facultyWorkspace" class="card faculty-panel" hidden>
+          <div class="agent-card-heading"><span class="agent-icon">✎</span><div><h3>Assignment Management</h3><p>Post assignment topics, instructions, units, due dates and maximum marks.</p></div></div>
+          <form id="agentPinAssignmentForm" class="faculty-grid">
+            <div>
+              <label for="newAssignmentTitle">Assignment topic / title</label><input id="newAssignmentTitle" required maxlength="160" placeholder="e.g., Dijkstra's Shortest Path Analysis">
+              <label for="newAssignmentUnit">Unit</label><select id="newAssignmentUnit"><option>Unit I</option><option>Unit II</option><option>Unit III</option><option>Unit IV</option><option>Unit V</option><option>Unit VI</option></select>
+            </div>
+            <div>
+              <label for="newAssignmentDescription">Instructions</label><textarea id="newAssignmentDescription" rows="3" required maxlength="4000"></textarea>
+              <label for="newAssignmentDue">Due date</label><input id="newAssignmentDue" type="date" required>
+              <label for="newAssignmentMarks">Maximum marks</label><input id="newAssignmentMarks" type="number" min="1" max="100" value="10" required>
+              <label for="newAssignmentRubric">Evaluation rubric (optional)</label><textarea id="newAssignmentRubric" rows="2" placeholder="Correctness; explanation; complexity; presentation"></textarea>
+              <button class="btn btn-primary" type="submit">Publish assignment</button>
+            </div>
+          </form>
+          <p id="assignmentPostingStatus" class="agent-status" role="status" aria-live="polite"></p>
+          <div class="faculty-review-section">
+            <div class="faculty-section-divider"></div>
+            <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Submission Review &amp; Assessment</h3><p>Review student work, use optional AI draft feedback, enter marks and feedback, and release faculty-approved results.</p></div></div>
+            <div><h4>Student submissions</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Select “Load submissions” to review student work.</div></div>
+          </div>
+          <p class="agent-disclosure">AI feedback is advisory. Faculty must inspect each submission, verify the rubric and approve every mark before release.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KCET Student Dashboard -->
+    <section id="student-dashboard" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Student Dashboard</h2>
+          <p>Access assignments, submit your work, check faculty feedback and clarify course-related doubts.</p>
+        </div>
         <div class="agent-config card">
           <label for="classAgentEndpoint">Google Apps Script Web App URL (one-time connection)</label>
           <div class="agent-inline"><input id="classAgentEndpoint" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="url"><button class="btn btn-primary" id="saveClassAgentEndpoint" type="button">Connect Agent</button></div>
           <small>Connect the existing KCET assignment backend. The same endpoint is used by the assignment workflow and the course support assistant.</small>
           <p id="classAgentStatus" class="agent-status" role="status" aria-live="polite">Not connected yet.</p>
         </div>
-
         <div class="section-header agent-subheading">
           <h3>Student Assignment Centre</h3>
           <p>View assignment instructions, submit your solution and check your faculty-reviewed result.</p>
@@ -592,44 +632,10 @@
           </article>
         </div>
 
-        <div class="card faculty-panel">
-          <div class="agent-card-heading"><span class="agent-icon">✎</span><div><h3>Faculty Dashboard – Assignment Management &amp; Assessment</h3><p>Publish assignment topics and due dates, view submissions, use AI-generated feedback as an advisory aid, and approve final marks.</p></div></div>
-          <form id="agentPinAssignmentForm" class="faculty-grid">
-            <div>
-              <label for="assignmentPostingPin">Faculty posting PIN</label><input id="assignmentPostingPin" type="password" required autocomplete="off" placeholder="Enter shared faculty PIN">
-              <label for="newAssignmentTitle">Assignment topic / title</label><input id="newAssignmentTitle" required maxlength="160" placeholder="e.g., Dijkstra's Shortest Path Analysis">
-              <label for="newAssignmentUnit">Unit</label><select id="newAssignmentUnit"><option>Unit I</option><option>Unit II</option><option>Unit III</option><option>Unit IV</option><option>Unit V</option><option>Unit VI</option></select>
-            </div>
-            <div>
-              <label for="newAssignmentDescription">Instructions</label><textarea id="newAssignmentDescription" rows="3" required maxlength="4000"></textarea>
-              <label for="newAssignmentDue">Due date</label><input id="newAssignmentDue" type="date" required>
-              <label for="newAssignmentMarks">Maximum marks</label><input id="newAssignmentMarks" type="number" min="1" max="100" value="10" required>
-              <label for="newAssignmentRubric">Evaluation rubric (optional)</label><textarea id="newAssignmentRubric" rows="2" placeholder="Correctness; explanation; complexity; presentation"></textarea>
-              <button class="btn btn-primary" type="submit">Verify PIN &amp; publish assignment</button>
-            </div>
-          </form>
-          <p id="assignmentPostingStatus" class="agent-status" role="status" aria-live="polite"></p>
-          <div class="faculty-review-section">
-            <div class="faculty-section-divider"></div>
-            <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Submission Review &amp; Assessment</h3><p>Sign in to inspect student work, generate optional AI draft feedback, enter or adjust marks and release only faculty-approved results.</p></div></div>
-            <div id="facultyLoginPanel"><label for="facultyPassword">Faculty password</label><div class="agent-inline"><input id="facultyPassword" type="password" autocomplete="current-password" placeholder="Enter faculty password"><button class="btn btn-primary" id="facultyLogin" type="button">Faculty sign in</button></div></div>
-            <div id="facultyWorkspace" hidden>
-              <div class="agent-inline faculty-toolbar"><strong>Faculty assessment workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div>
-              <div><h4>Student submissions</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Sign in to review submissions.</div></div>
-            </div>
-            <p id="facultyStatus" class="agent-status" role="status" aria-live="polite"></p>
-          </div>
-        </div>
-        <p class="agent-disclosure">Assessment integrity: AI feedback is advisory and may contain errors. Faculty must inspect each submission, verify the rubric and approve every mark before release. Students should keep receipt codes private and avoid submitting sensitive personal information.</p>
-      </div>
-    </section>
 
-    <!-- Separate Student Corner: AI Doubt Clarification -->
-    <section id="student-corner" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Student Corner – AI Doubt Clarification</h2>
-          <p>Ask questions about CS25C12 Algorithms and receive guided explanations to strengthen understanding.</p>
+        <div class="section-header agent-subheading">
+          <h3>AI Doubt Clarification</h3>
+          <p>Ask questions about CS25C12 Algorithms and receive guided explanations.</p>
         </div>
         <div class="agent-grid student-corner-grid">
           <article class="card agent-card student-doubt-card">
@@ -643,6 +649,7 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
@@ -652,6 +659,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20261104-assignment-agent"></script>
+  <script src="app.js?v=20261104-two-dashboards"></script>
 </body>
 </html>

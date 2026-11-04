@@ -56,26 +56,31 @@ function caRequest(payload,callback){
   try{form.submit()}catch(err){form.remove();callback({success:false,error:"Could not send request to Apps Script: "+err.message});return}
   setTimeout(()=>form.remove(),1500);
   let attempts=0,finished=false;
+  const maxAttempts=360;
   const poll=()=>{
     if(finished)return;
     attempts++;
     const cb="caResult_"+requestId.replace(/[^A-Za-z0-9_]/g,"");
     const script=document.createElement("script");
-    let settled=false;
-    const cleanup=()=>{if(settled)return;settled=true;delete window[cb];script.remove()};
+    let settled=false,watchdog;
+    const cleanup=()=>{if(settled)return;settled=true;clearTimeout(watchdog);delete window[cb];script.remove()};
+    const retry=()=>{
+      cleanup();
+      if(attempts<maxAttempts)setTimeout(poll,1000);
+      else{finished=true;callback({success:false,error:"The submission was received, but its confirmation could not be retrieved after 6 minutes. Please do not upload again; ask faculty to verify the submission."});}
+    };
     window[cb]=data=>{
       cleanup();
-      if(data&&data.pending){if(attempts<120)setTimeout(poll,1000);else{finished=true;callback({success:false,error:"Apps Script did not return a result within 120 seconds. Check deployment and Executions."});}return}
+      if(data&&data.pending){if(attempts<maxAttempts)setTimeout(poll,1000);else{finished=true;callback({success:false,error:"The submission may have been received, but Apps Script did not return a confirmation. Please do not upload again; ask faculty to verify it."});}return}
       finished=true;
-      callback(data||{success:false,error:"Apps Script returned an empty response."});
+      callback(data||{success:false,error:"Apps Script returned an empty response. Please ask faculty to verify the submission before retrying."});
     };
-    script.onerror=()=>{
-      cleanup();
-      if(attempts<120)setTimeout(poll,1000);
-      else{finished=true;callback({success:false,error:"Could not read the Apps Script response. Check the /exec URL and deployment access."});}
-    };
+    script.onerror=retry;
     script.src=url+(url.includes("?")?"&":"?")+"action=apiResult&id="+encodeURIComponent(requestId)+"&callback="+cb+"&_="+Date.now();
     document.head.appendChild(script);
+    // A cross-origin script can load an HTML/error page without firing onerror.
+    // The watchdog detects that silent JSONP failure and safely retries.
+    watchdog=setTimeout(()=>{if(!settled)retry()},8000);
   };
   setTimeout(poll,900);
 }

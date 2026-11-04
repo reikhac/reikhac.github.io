@@ -610,14 +610,15 @@
             <div id="agentAssignmentList" class="agent-assignment-list" aria-live="polite">Connect the Assignment Agent to load assignments.</div>
           </article>
           <article class="card agent-card">
-            <div class="agent-card-heading"><span class="agent-icon">↥</span><div><h3>Submit Your Assignment</h3><p>Enter your solution or provide a shareable Google Drive file link.</p></div></div>
+            <div class="agent-card-heading"><span class="agent-icon">↥</span><div><h3>Submit Your Assignment</h3><p>Upload your completed assignment as a file. Typed answers and external Drive links are not accepted.</p></div></div>
             <form id="agentSubmissionForm">
               <label for="agentStudentName">Student name</label><input id="agentStudentName" required maxlength="100" placeholder="Your full name">
               <label for="agentRollNumber">College roll number</label><input id="agentRollNumber" required maxlength="40" placeholder="Your roll number">
               <label for="agentAssignmentSelect">Select assignment</label><select id="agentAssignmentSelect" required><option value="">Load assignments first</option></select>
-              <label for="agentSubmissionText">Answer / explanation</label><textarea id="agentSubmissionText" rows="4" maxlength="12000" placeholder="Write your solution, algorithm, complexity analysis and observations..."></textarea>
-              <label for="agentDriveLink">Google Drive file link (optional)</label><input id="agentDriveLink" type="url" placeholder="https://drive.google.com/...">
-              <button class="btn btn-primary" type="submit">Submit assignment</button>
+              <label for="agentSubmissionFile">Attach assignment file (PDF, Word, PowerPoint, Excel or ZIP; maximum 8 MB)</label>
+              <input id="agentSubmissionFile" type="file" required accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip">
+              <p class="schedule-note">Upload one file only. Include your written answers, diagrams and code in the attached document where applicable.</p>
+              <button class="btn btn-primary" type="submit">Upload &amp; submit assignment</button>
             </form>
             <div id="agentSubmissionResult" class="agent-answer" aria-live="polite"></div>
           </article>

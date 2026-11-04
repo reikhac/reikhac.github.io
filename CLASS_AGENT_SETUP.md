@@ -38,3 +38,15 @@ After updating `ClassAgent.gs` in Apps Script and saving:
 5. Re-test **Ask the Class Agent** and **AI evaluate** on the website.
 
 Do not paste the API key into GitHub, website JavaScript, or a chat. Do not share execution logs if they contain secrets.
+
+ 
+## Fix for faculty sign-in showing "No response / loading continuously"
+The website/backend transport has been changed to avoid relying on an Apps Script HTML response executing inside a cross-origin hidden iframe. The browser now submits the request to `doPost`, and the page retrieves the result using a JSONP poll to `doGet?action=apiResult`. This keeps the faculty password in the POST body rather than a URL query string. Google documents the `doPost(e)` event parameters and web-app deployment behavior at https://developers.google.com/apps-script/guides/web.
+
+Apply BOTH updated files from GitHub:
+- Replace the complete contents of the Apps Script `ClassAgent.gs` with the repository version.
+- Update the website repository's `app.js` (GitHub Pages will publish it automatically after the commit).
+
+Then in Apps Script: Save → Deploy → Manage deployments → Edit → New version → Deploy. Copy the deployed URL ending in `/exec` and re-save it in the website's Class Agent endpoint field. Test in a fresh browser tab. Check Apps Script **Executions**: a login attempt should create a `doPost` execution. If no execution appears, the endpoint/deployment URL or access setting is wrong. If an execution appears with an error, inspect that execution's error details.
+
+The hidden form iframe is used only to send the POST; the browser no longer waits for a JavaScript `postMessage` from an Apps Script HtmlService page. This avoids a class of cross-origin iframe response failures.

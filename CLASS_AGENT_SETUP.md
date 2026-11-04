@@ -14,6 +14,25 @@ Generate the password hash by temporarily running this helper after replacing th
 function printFacultyPasswordHashOnce(){const password='REPLACE_WITH_A_LONG_UNIQUE_PASSWORD';const hash=Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,password,Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');console.log(hash)}
 ```
 
+## Faculty assignment posting PIN (no sign-in)
+Assignment creation uses a separate shared PIN. Faculty do not need to sign in to publish a topic, instructions, unit, due date and marks. The existing faculty password login remains required for viewing student submissions, AI-assisted evaluation, and approving/releasing marks.
+
+1. Choose a strong, private PIN and share it only with authorised faculty. Do not put the PIN in GitHub or the website.
+2. In Apps Script, open Project Settings → Script Properties.
+3. Add a property named `CA_ASSIGNMENT_PIN_SHA256` with the SHA-256 hash of your chosen PIN.
+4. To calculate the hash, temporarily add this helper to the Apps Script editor, replace the sample value locally, run it once, copy the log output into the Script Property, and then delete the helper:
+```javascript
+function printAssignmentPinHashOnce(){
+  const pin='REPLACE_WITH_YOUR_PRIVATE_PIN';
+  const hash=Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,pin,Utilities.Charset.UTF_8)
+    .map(b=>('0'+(b&255).toString(16)).slice(-2)).join('');
+  console.log(hash);
+}
+```
+5. Save and deploy a New version of the Web App. The website will show a separate Faculty Assignment Posting form. Enter the PIN to publish; no faculty sign-in is needed for this action.
+
+The PIN is shared among faculty, so rotate it if it is disclosed. This PIN protects assignment creation only; it does not grant access to student submissions or marks. Anyone who obtains the PIN can publish assignments, so distribute it carefully.
+
 ## Deployment
 Deploy → Manage deployments → Edit → New version → Deploy. Choose Execute as: Me. For no-login student access, the web app must accept anonymous users (Anyone), if allowed by your Workspace administrator. If anonymous deployment is prohibited, student sign-in must be enabled instead. Paste the /exec URL into the website Class Agent connection field. The same endpoint serves both the Class Agent and Exit Ticket: action=assignments returns published tasks; the normal callback request continues to call getExitTicketDashboardData_(). Keep that existing data function and its helpers.
 

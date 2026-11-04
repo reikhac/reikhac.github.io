@@ -1,6 +1,6 @@
 # KCET Class Agent — setup
 
-Add the repository file ClassAgent.gs to the SAME Apps Script project as the existing Daily Exit Ticket. It defines doGet and doPost; if these names already exist, merge the Class Agent routes into your existing handlers rather than leaving duplicate definitions.
+Add the repository file ClassAgent.gs to the SAME Apps Script project as the existing Daily Exit Ticket. It defines doGet and doPost. Its doGet router sends action=assignments to the Class Agent and all other requests to your existing getExitTicketDashboardData_() function, preserving the Exit Ticket JSON/JSONP feed. Replace your old doGet(e) with this router, keep getExitTicketDashboardData_() and its helper functions, and add doPost(e). Do not leave duplicate doGet functions.
 
 ## Backend setup
 1. Open the Apps Script project connected to the course spreadsheet.
@@ -15,7 +15,7 @@ function printFacultyPasswordHashOnce(){const password='REPLACE_WITH_A_LONG_UNIQ
 ```
 
 ## Deployment
-Deploy → Manage deployments → Edit → New version → Deploy. Choose Execute as: Me. For no-login student access, the web app must accept anonymous users (Anyone), if allowed by your Workspace administrator. If anonymous deployment is prohibited, student sign-in must be enabled instead. Paste the /exec URL into the website Class Agent connection field. The same endpoint can serve the Exit Ticket only after merging both doGet routes and retaining the existing Exit Ticket handler and data function.
+Deploy → Manage deployments → Edit → New version → Deploy. Choose Execute as: Me. For no-login student access, the web app must accept anonymous users (Anyone), if allowed by your Workspace administrator. If anonymous deployment is prohibited, student sign-in must be enabled instead. Paste the /exec URL into the website Class Agent connection field. The same endpoint serves both the Class Agent and Exit Ticket: action=assignments returns published tasks; the normal callback request continues to call getExitTicketDashboardData_(). Keep that existing data function and its helpers.
 
 ## Test
 Publish a test assignment, submit a dummy answer, save the receipt code, sign in to the faculty panel, load submissions, generate AI draft feedback, verify it, edit marks if needed and Approve & release. Check released feedback using the roll number and receipt code. Test the Exit Ticket separately.

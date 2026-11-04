@@ -738,3 +738,19 @@ section[id]{scroll-margin-top:82px}
 @media(max-width:768px){.section{padding:3.7rem 0}.section-header{margin-bottom:1.8rem}.nav-container{padding:.8rem 1rem}.nav-menu{gap:.65rem}.nav-link{font-size:.9rem;padding:.55rem}.hero-content h1{font-size:2.65rem}.hero-section:after{right:-5%;top:10%}.meta-strip{grid-template-columns:1fr;max-width:520px}.meta-item{padding:.8rem 1rem}.meta-item+.meta-item{border-left:0;border-top:1px solid #e8edf6}.hero-highlights{gap:.65rem 1rem}.data-table th,.data-table td{padding:.75rem .8rem}}
 @media(max-width:480px){.hero-content h1{font-size:2.35rem}.hero-cta{width:100%;justify-content:space-between}.hero-highlights{font-size:.72rem}.section{padding:3.2rem 0}.card{padding:1.25rem}.accordion-btn{padding:1rem}.unit-num{min-width:65px}.unit-title{font-size:.9rem}.quiz-controls{width:100%}.quiz-controls select{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* KCET Class Agent */
+.agent-notice{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #2563eb;padding:1rem 1.2rem;border-radius:10px;margin-bottom:1.25rem;color:#1e3a8a}
+.agent-config{margin-bottom:1.5rem}.agent-config label,.agent-card label,.faculty-panel label{display:block;font-weight:600;font-size:.9rem;margin:.8rem 0 .35rem;color:var(--text-heading)}
+.agent-config small{display:block;color:var(--text-muted);margin-top:.5rem}.agent-inline{display:flex;gap:.65rem;align-items:center;flex-wrap:wrap}.agent-inline input{flex:1;min-width:180px}
+.agent-status{font-size:.9rem;color:var(--text-muted);margin-top:.7rem}.agent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.agent-card{min-width:0}.agent-card-heading{display:flex;gap:.85rem;align-items:center;margin-bottom:1rem}.agent-card-heading h3{font-size:1.15rem}.agent-card-heading p{font-size:.88rem;color:var(--text-muted)}
+.agent-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#eff6ff;color:#2563eb;font-size:1.35rem;flex-shrink:0}
+.agent-card input,.agent-card select,.agent-card textarea,.faculty-panel input,.faculty-panel select,.faculty-panel textarea,.agent-config input{width:100%;padding:.75rem .85rem;border:1px solid var(--border-color);border-radius:8px;font:inherit;background:#fff;color:var(--text-main);margin-bottom:.3rem}
+.agent-card textarea,.faculty-panel textarea{resize:vertical}.btn-primary{background:#2563eb;color:#fff;border:1px solid #2563eb;cursor:pointer}.btn-primary:hover{background:#1d4ed8;color:#fff}
+.agent-answer{margin-top:1rem;padding:1rem;background:#f8fafc;border:1px solid var(--border-color);border-radius:9px;white-space:pre-wrap;font-size:.93rem;min-height:50px}
+.agent-assignment-list{display:grid;gap:.75rem;margin-top:1rem}.agent-assignment{border:1px solid var(--border-color);padding:1rem;border-radius:9px;background:#fbfdff}.agent-assignment h4{margin-bottom:.35rem}.agent-assignment p{font-size:.9rem;margin-top:.35rem;overflow-wrap:anywhere}
+.faculty-panel{margin-top:1.5rem;border-top:4px solid #0f172a}.faculty-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:2rem;margin-top:1.25rem}.faculty-grid h4{margin-bottom:.7rem}.faculty-toolbar{justify-content:space-between;margin:.5rem 0 1rem}
+.agent-disclosure{font-size:.84rem;color:var(--text-muted);margin-top:1rem}
+@media(max-width:800px){.agent-grid,.faculty-grid{grid-template-columns:1fr}.agent-inline{align-items:stretch}.agent-inline .btn{width:100%}}

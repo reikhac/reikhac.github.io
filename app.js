@@ -65,13 +65,13 @@ function caRequest(payload,callback){
     const cleanup=()=>{if(settled)return;settled=true;delete window[cb];script.remove()};
     window[cb]=data=>{
       cleanup();
-      if(data&&data.pending){if(attempts<30)setTimeout(poll,700);else{finished=true;callback({success:false,error:"Apps Script did not return a result within 21 seconds. Check deployment and Executions."});}return}
+      if(data&&data.pending){if(attempts<120)setTimeout(poll,1000);else{finished=true;callback({success:false,error:"Apps Script did not return a result within 120 seconds. Check deployment and Executions."});}return}
       finished=true;
       callback(data||{success:false,error:"Apps Script returned an empty response."});
     };
     script.onerror=()=>{
       cleanup();
-      if(attempts<30)setTimeout(poll,700);
+      if(attempts<120)setTimeout(poll,1000);
       else{finished=true;callback({success:false,error:"Could not read the Apps Script response. Check the /exec URL and deployment access."});}
     };
     script.src=url+(url.includes("?")?"&":"?")+"action=apiResult&id="+encodeURIComponent(requestId)+"&callback="+cb+"&_="+Date.now();

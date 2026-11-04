@@ -9,7 +9,7 @@ function doGet(e){
       const id=String(p.id||'');
       if(!/^[A-Za-z0-9_-]{8,100}$/.test(id))throw Error('Invalid request ID');
       const cache=CacheService.getScriptCache(),stored=cache.get('ca_result_'+id);
-      if(stored){cache.remove('ca_result_'+id);r=JSON.parse(stored)}
+      if(stored){r=JSON.parse(stored)}
       else{r={success:false,pending:true}}
     }else if(typeof getExitTicketDashboardData_==='function'){
       r=getExitTicketDashboardData_();
@@ -33,7 +33,7 @@ function doPost(e){
     result=caDispatch_(payload);
   }catch(err){result={success:false,error:String(err.message||err)}}
   if(requestId){
-    try{CacheService.getScriptCache().put('ca_result_'+requestId,JSON.stringify(result),120)}
+    try{CacheService.getScriptCache().put('ca_result_'+requestId,JSON.stringify(result),21600)}
     catch(cacheError){result={success:false,error:'Could not store response: '+String(cacheError.message||cacheError)}}
   }
   return ContentService.createTextOutput('KCET Class Agent request processed.').setMimeType(ContentService.MimeType.TEXT);

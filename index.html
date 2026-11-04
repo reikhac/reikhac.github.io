@@ -589,7 +589,7 @@
           </article>
         </div>
         <div class="card faculty-panel">
-          <div class="agent-card-heading"><span class="agent-icon">✎</span><div><h3>Faculty Assignment Posting</h3><p>Publish assignment topics and due dates using the faculty posting PIN. No faculty sign-in required.</p></div></div>
+          <div class="agent-card-heading"><span class="agent-icon">✎</span><div><h3>Faculty Dashboard – Assignment Management &amp; Assessment</h3><p>Manage the complete assignment lifecycle in one place: publish topics and deadlines, review student submissions, verify AI-assisted evaluation, and approve marks.</p></div></div>
           <form id="agentPinAssignmentForm" class="faculty-grid">
             <div>
               <label for="assignmentPostingPin">Faculty posting PIN</label><input id="assignmentPostingPin" type="password" required autocomplete="off" placeholder="Enter shared faculty PIN">
@@ -605,15 +605,16 @@
             </div>
           </form>
           <p id="assignmentPostingStatus" class="agent-status" role="status" aria-live="polite"></p>
-        </div>
-        <div class="card faculty-panel">
-          <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Faculty Review Panel</h3><p>Faculty sign-in is retained only for reviewing submissions, AI-assisted evaluation and approving/releasing marks.</p></div></div>
+          <div class="faculty-review-section">
+          <div class="faculty-section-divider"></div>
+          <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Submission Review &amp; Assessment</h3><p>Sign in to review submissions, generate advisory AI feedback, verify marks and release faculty-approved results.</p></div></div>
           <div id="facultyLoginPanel"><label for="facultyPassword">Faculty password</label><div class="agent-inline"><input id="facultyPassword" type="password" autocomplete="current-password" placeholder="Enter faculty password"><button class="btn btn-primary" id="facultyLogin" type="button">Faculty sign in</button></div></div>
           <div id="facultyWorkspace" hidden>
             <div class="agent-inline faculty-toolbar"><strong>Faculty review workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div>
             <div><h4>Submission review</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Sign in to review submissions.</div></div>
           </div>
           <p id="facultyStatus" class="agent-status" role="status" aria-live="polite"></p>
+          </div>
         </div>
         <p class="agent-disclosure">AI feedback is advisory and may contain errors. Faculty must inspect the submitted work, verify the rubric and approve every mark before release. Do not submit sensitive personal information.</p>
       </div>

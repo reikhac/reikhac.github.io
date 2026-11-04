@@ -81,7 +81,7 @@
       if(!r||!r.success){alert((r&&r.error)||"Could not export submissions.");return;}
       const rows=[["Assignment","Student Name","Roll Number","Submitted At","Status","Final Marks","Maximum Marks","AI Feedback","Answer","Drive Link"]];
       (r.submissions||[]).forEach(s=>rows.push([s.assignmentTitle,s.name,s.roll,s.submittedAt,s.status,s.finalMarks,s.maxMarks,s.aiFeedback,s.answer,s.driveLink]));
-      const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+      const csvCell=v=>{let x=String(v??"");if(/^[=+\-@\t]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"';};const csv=rows.map(row=>row.map(csvCell).join(",")).join("\r\n");
       const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
       a.href=url;a.download="KCET_CS25C12_Submissions_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
     });

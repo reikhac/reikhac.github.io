@@ -589,23 +589,29 @@
           </article>
         </div>
         <div class="card faculty-panel">
-          <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Faculty Control Panel</h3><p>Protected access for assignment publishing, AI-assisted evaluation and mark approval.</p></div></div>
+          <div class="agent-card-heading"><span class="agent-icon">✎</span><div><h3>Faculty Assignment Posting</h3><p>Publish assignment topics and due dates using the faculty posting PIN. No faculty sign-in required.</p></div></div>
+          <form id="agentPinAssignmentForm" class="faculty-grid">
+            <div>
+              <label for="assignmentPostingPin">Faculty posting PIN</label><input id="assignmentPostingPin" type="password" required autocomplete="off" placeholder="Enter shared faculty PIN">
+              <label for="newAssignmentTitle">Assignment topic / title</label><input id="newAssignmentTitle" required maxlength="160" placeholder="e.g., Dijkstra's Shortest Path Analysis">
+              <label for="newAssignmentUnit">Unit</label><select id="newAssignmentUnit"><option>Unit I</option><option>Unit II</option><option>Unit III</option><option>Unit IV</option><option>Unit V</option><option>Unit VI</option></select>
+            </div>
+            <div>
+              <label for="newAssignmentDescription">Instructions</label><textarea id="newAssignmentDescription" rows="3" required maxlength="4000"></textarea>
+              <label for="newAssignmentDue">Due date</label><input id="newAssignmentDue" type="date" required>
+              <label for="newAssignmentMarks">Maximum marks</label><input id="newAssignmentMarks" type="number" min="1" max="100" value="10" required>
+              <label for="newAssignmentRubric">Evaluation rubric (optional)</label><textarea id="newAssignmentRubric" rows="2" placeholder="Correctness; explanation; complexity; presentation"></textarea>
+              <button class="btn btn-primary" type="submit">Verify PIN & publish assignment</button>
+            </div>
+          </form>
+          <p id="assignmentPostingStatus" class="agent-status" role="status" aria-live="polite"></p>
+        </div>
+        <div class="card faculty-panel">
+          <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Faculty Review Panel</h3><p>Faculty sign-in is retained only for reviewing submissions, AI-assisted evaluation and approving/releasing marks.</p></div></div>
           <div id="facultyLoginPanel"><label for="facultyPassword">Faculty password</label><div class="agent-inline"><input id="facultyPassword" type="password" autocomplete="current-password" placeholder="Enter faculty password"><button class="btn btn-primary" id="facultyLogin" type="button">Faculty sign in</button></div></div>
           <div id="facultyWorkspace" hidden>
-            <div class="agent-inline faculty-toolbar"><strong>Faculty workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div>
-            <div class="faculty-grid">
-              <form id="agentCreateAssignment">
-                <h4>Publish an assignment</h4>
-                <label for="newAssignmentTitle">Title</label><input id="newAssignmentTitle" required maxlength="160" placeholder="e.g., Dijkstra's Shortest Path Analysis">
-                <label for="newAssignmentUnit">Unit</label><select id="newAssignmentUnit"><option>Unit I</option><option>Unit II</option><option>Unit III</option><option>Unit IV</option><option>Unit V</option><option>Unit VI</option></select>
-                <label for="newAssignmentDescription">Instructions</label><textarea id="newAssignmentDescription" rows="3" required maxlength="4000"></textarea>
-                <label for="newAssignmentDue">Due date</label><input id="newAssignmentDue" type="date" required>
-                <label for="newAssignmentMarks">Maximum marks</label><input id="newAssignmentMarks" type="number" min="1" max="100" value="10" required>
-                <label for="newAssignmentRubric">Evaluation rubric</label><textarea id="newAssignmentRubric" rows="3" placeholder="Correctness 40%; explanation 25%; complexity 20%; presentation 15%"></textarea>
-                <button class="btn btn-primary" type="submit">Publish assignment</button>
-              </form>
-              <div><h4>Submission review</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Sign in to review submissions.</div></div>
-            </div>
+            <div class="agent-inline faculty-toolbar"><strong>Faculty review workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div>
+            <div><h4>Submission review</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Sign in to review submissions.</div></div>
           </div>
           <p id="facultyStatus" class="agent-status" role="status" aria-live="polite"></p>
         </div>

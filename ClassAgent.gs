@@ -82,7 +82,7 @@ function caGemini_(prompt){
     headers:{'x-goog-api-key':key},
     payload:JSON.stringify({
       contents:[{parts:[{text:String(prompt)}]}],
-      generationConfig:{temperature:0.2,maxOutputTokens:1200}
+      generationConfig:{maxOutputTokens:700,thinkingConfig:{thinkingLevel:'low'}}
     }),
     muteHttpExceptions:true
   });

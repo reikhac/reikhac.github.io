@@ -19,3 +19,14 @@ function caApprove_(p){const x=caFind_(p.submissionId),r=x.data,max=caMax_(Strin
 function caReleased_(p){const roll=String(p.roll||'').trim(),receipt=String(p.receiptCode||'').trim();if(!roll||!receipt)throw Error('Enter roll number and receipt code');const h=caHash_(receipt+'|'+roll.toLowerCase()),r=caRows_('CA Submissions').slice(1).find(x=>String(x[4]).toLowerCase()===roll.toLowerCase()&&String(x[8])===h);if(!r)throw Error('No matching record; check both values');if(r[11]!=='Released')return{success:true,released:false};return{success:true,released:true,assignment:String(r[2]),marks:Number(r[12]),maxMarks:caMax_(String(r[1])),feedback:String(r[13])}}
 function caGemini_(prompt){const key=PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');if(!key)throw Error('GEMINI_API_KEY is missing in Script Properties');const url='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+encodeURIComponent(key),res=UrlFetchApp.fetch(url,{method:'post',contentType:'application/json',payload:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.2,maxOutputTokens:900}}),muteHttpExceptions:true}),code=res.getResponseCode(),body=JSON.parse(res.getContentText());if(code<200||code>=300)throw Error('Gemini API error '+code+'; check key, access and quota');const out=body.candidates&&body.candidates[0]&&body.candidates[0].content.parts.map(x=>x.text||'').join('');if(!out)throw Error('Gemini returned an empty response');return out.trim()}
 function caHash_(s){return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,String(s),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('')}
+function printFacultyPasswordHashOnce() {
+  const password = 'YourStrongPassword@2026';
+
+  const hash = Utilities.computeDigest(
+    Utilities.DigestAlgorithm.SHA_256,
+    password,
+    Utilities.Charset.UTF_8
+  ).map(b => ('0' + (b & 255).toString(16)).slice(-2)).join('');
+
+  console.log(hash);
+}

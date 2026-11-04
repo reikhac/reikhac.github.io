@@ -549,7 +549,7 @@
     <section id="class-agent" class="section bg-light">
       <div class="container">
         <div class="section-header"><h2>KCET Class Agent</h2><p>Your course companion for assignments, doubt support, submissions and faculty-reviewed assessment.</p></div>
-        <div class="agent-notice"><strong>Student access:</strong> No account required. Enter your name and roll number when submitting. Keep your receipt code private to view released feedback.</div>
+        <div class="agent-notice"><strong>Student access:</strong> No account required. Enter your name and roll number when submitting. Keep your receipt code private to view released feedback. Assignment deadlines are enforced by the server; contact faculty for an authorised extension.</div><div class="agent-metrics" aria-label="Class Agent overview"><article><span>Published assignments</span><strong id="caMetricPublished">—</strong></article><article><span>Deadline policy</span><strong>23:59 IST</strong></article><article><span>Submission records</span><strong id="caMetricSubmissions">Faculty view</strong></article><article><span>Learning support</span><strong>24 × 7</strong></article></div>
         <div class="agent-config card">
           <label for="classAgentEndpoint">Google Apps Script Web App URL</label>
           <div class="agent-inline"><input id="classAgentEndpoint" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="url"><button class="btn btn-primary" id="saveClassAgentEndpoint" type="button">Connect</button></div>
@@ -559,7 +559,7 @@
         <div class="agent-grid">
           <article class="card agent-card">
             <div class="agent-card-heading"><span class="agent-icon">✦</span><div><h3>Ask the Class Agent</h3><p>Guided help with CS25C12 Algorithms.</p></div></div>
-            <label for="agentQuestion">Your question</label><textarea id="agentQuestion" rows="3" placeholder="e.g., Explain Prim's and Kruskal's algorithms."></textarea>
+            <label for="agentLearningMode">Learning mode</label><select id="agentLearningMode"><option value="explain">Explain a concept</option><option value="hint">Give me a hint (do not reveal the answer)</option><option value="pseudocode">Generate pseudocode</option><option value="dryrun">Step-by-step dry run</option><option value="complexity">Analyse time and space complexity</option></select><label for="agentQuestion">Your question</label><textarea id="agentQuestion" rows="3" maxlength="2000" placeholder="Ask a question about CS25C12 Algorithms"></textarea>
             <button class="btn btn-primary" id="askClassAgent" type="button">Ask question</button>
             <div id="agentAnswer" class="agent-answer" aria-live="polite">Ask a course-related question to begin.</div>
           </article>
@@ -600,7 +600,7 @@
               <label for="newAssignmentDescription">Instructions</label><textarea id="newAssignmentDescription" rows="3" required maxlength="4000"></textarea>
               <label for="newAssignmentDue">Due date</label><input id="newAssignmentDue" type="date" required>
               <label for="newAssignmentMarks">Maximum marks</label><input id="newAssignmentMarks" type="number" min="1" max="100" value="10" required>
-              <label for="newAssignmentRubric">Evaluation rubric (optional)</label><textarea id="newAssignmentRubric" rows="2" placeholder="Correctness; explanation; complexity; presentation"></textarea>
+              <label for="newAssignmentRubric">Evaluation rubric (optional)</label><textarea id="newAssignmentRubric" rows="2" placeholder="Correctness; explanation; complexity; presentation"></textarea><label for="newAssignmentCO">Mapped Course Outcome</label><select id="newAssignmentCO"><option value="">Select CO (optional)</option><option>CO1</option><option>CO2</option><option>CO3</option><option>CO4</option><option>CO5</option></select><label for="newAssignmentBTL">Bloom Taxonomy Level</label><select id="newAssignmentBTL"><option value="">Select BTL (optional)</option><option>BTL1 – Remember</option><option>BTL2 – Understand</option><option>BTL3 – Apply</option><option>BTL4 – Analyse</option><option>BTL5 – Evaluate</option><option>BTL6 – Create</option></select>
               <button class="btn btn-primary" type="submit">Verify PIN & publish assignment</button>
             </div>
           </form>
@@ -610,7 +610,7 @@
           <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Faculty Review Panel</h3><p>Faculty sign-in is retained only for reviewing submissions, AI-assisted evaluation and approving/releasing marks.</p></div></div>
           <div id="facultyLoginPanel"><label for="facultyPassword">Faculty password</label><div class="agent-inline"><input id="facultyPassword" type="password" autocomplete="current-password" placeholder="Enter faculty password"><button class="btn btn-primary" id="facultyLogin" type="button">Faculty sign in</button></div></div>
           <div id="facultyWorkspace" hidden>
-            <div class="agent-inline faculty-toolbar"><strong>Faculty review workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div>
+            <div class="agent-inline faculty-toolbar"><strong>Faculty review workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div><div class="ca-faculty-tools"><h4>Academic analytics</h4><div id="caAnalytics" class="ca-analytics-grid"><p>Load analytics after signing in.</p></div><button class="btn btn-outline" id="caRefreshAnalytics" type="button">Refresh analytics</button><button class="btn btn-outline" id="caExportSubmissions" type="button">Export submissions CSV</button></div><div class="ca-faculty-tools"><h4>Manage published assignments</h4><p class="agent-help">Edit instructions, change deadlines, close submissions or unpublish an assignment. Changes are recorded in the audit sheet.</p><button class="btn btn-outline" id="caLoadManage" type="button">Load assignment manager</button><div id="caManageAssignments" class="agent-assignment-list" aria-live="polite"></div></div>
             <div><h4>Submission review</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Sign in to review submissions.</div></div>
           </div>
           <p id="facultyStatus" class="agent-status" role="status" aria-live="polite"></p>
@@ -627,6 +627,7 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20261104-pin1"></script>
+  <script src="app.js?v=20261104-ca2"></script>
+  <script src="class-agent-enhancements.js?v=20261104-ca2"></script>
 </body>
 </html>

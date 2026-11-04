@@ -754,3 +754,8 @@ section[id]{scroll-margin-top:82px}
 .faculty-panel{margin-top:1.5rem;border-top:4px solid #0f172a}.faculty-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:2rem;margin-top:1.25rem}.faculty-grid h4{margin-bottom:.7rem}.faculty-toolbar{justify-content:space-between;margin:.5rem 0 1rem}
 .agent-disclosure{font-size:.84rem;color:var(--text-muted);margin-top:1rem}
 @media(max-width:800px){.agent-grid,.faculty-grid{grid-template-columns:1fr}.agent-inline{align-items:stretch}.agent-inline .btn{width:100%}}
+
+
+.faculty-review-section{margin-top:1.5rem;padding-top:.25rem}
+.faculty-section-divider{height:1px;background:var(--border-color);margin:1.4rem 0}
+.faculty-review-section .agent-card-heading{margin-bottom:1rem}

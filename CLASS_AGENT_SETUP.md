@@ -69,3 +69,50 @@ Apply BOTH updated files from GitHub:
 Then in Apps Script: Save → Deploy → Manage deployments → Edit → New version → Deploy. Copy the deployed URL ending in `/exec` and re-save it in the website's Class Agent endpoint field. Test in a fresh browser tab. Check Apps Script **Executions**: a login attempt should create a `doPost` execution. If no execution appears, the endpoint/deployment URL or access setting is wrong. If an execution appears with an error, inspect that execution's error details.
 
 The hidden form iframe is used only to send the POST; the browser no longer waits for a JavaScript `postMessage` from an Apps Script HtmlService page. This avoids a class of cross-origin iframe response failures.
+
+
+## Complete Class Agent redesign (November 2026)
+
+The redesigned website adds guided AI learning modes (explain, hint, pseudocode, dry run and complexity), assignment CO/BTL tagging, faculty assignment editing/status management, a faculty analytics summary, CSV export, a submission audit sheet, and server-side deadline enforcement. The original course sections, quiz bank, Algorithm Lab, Exit Ticket, student submission flow and receipt-code feedback lookup remain in place.
+
+### Apply the website update
+1. Merge the branch `class-agent-redesign-2026` into `main` after reviewing the changes, or use the GitHub pull request workflow.
+2. GitHub Pages will publish the updated `index.html`, `app.js`, `style.css` and new `class-agent-enhancements.js` file from the default branch.
+3. Hard-refresh the browser (Ctrl+F5). The Class Agent and Exit Ticket continue to use the same Apps Script endpoint stored in the browser.
+
+### Apply the Apps Script update
+1. In the existing Apps Script project, replace the complete contents of `ClassAgent.gs` with the updated repository version. Keep the existing `getExitTicketDashboardData_()` function and its helpers; do not create a second `doGet` or `doPost`.
+2. Run `setupClassAgent()` again. It reuses the configured spreadsheet and Drive folder, creates the new `CA Audit` sheet, and appends missing assignment metadata headers (CO, BTL and AllowLate) without deleting existing records.
+3. Confirm Script Properties: `SPREADSHEET_ID`, `CA_DRIVE_FOLDER_ID`, `GEMINI_API_KEY`, `FACULTY_PASSWORD_SHA256`, and `CA_ASSIGNMENT_PIN_SHA256`. Keep all secrets out of GitHub.
+4. Save and deploy a **New version** of the existing Web App. Use Execute as: Me and access Anyone only if permitted by the institution's Google Workspace administrator. Copy the same deployed `/exec` URL into the Class Agent endpoint field.
+5. Do not create a second Apps Script deployment unless you intend to maintain separate data stores; the Class Agent and Exit Ticket should continue to share the same endpoint and spreadsheet integration.
+
+### New faculty functions
+- **Manage assignments:** sign in to edit title, unit, instructions, due date, marks, rubric, CO, BTL and status (Published, Closed or Unpublished).
+- **Academic analytics:** view assignment/submission counts, pending review, released marks, average released mark and unit-level CO/BTL evidence.
+- **CSV export:** export the submission register from the faculty workspace. Treat the export as confidential student data.
+- **Audit trail:** the `CA Audit` sheet records assignment creation, assignment updates and marks release.
+- **Deadline rule:** submissions are accepted through 23:59:59 Asia/Kolkata on the due date. After that, the server rejects submissions. Faculty can extend the due date by editing the assignment; the change is recorded in the audit sheet.
+
+### Validation checklist
+Use dummy students and dummy assignments first:
+1. Open the course site and verify all original tabs, quiz interactions, Bubble Sort, Dijkstra and Exit Ticket.
+2. Connect the existing Apps Script `/exec` URL; verify published assignments appear.
+3. Ask one test question in each AI learning mode.
+4. Publish a dummy assignment using the shared posting PIN, with a due date in the future and CO/BTL tags.
+5. Submit a dummy answer before the deadline; confirm receipt code generation and Drive text record creation.
+6. Attempt a submission after a test assignment deadline; confirm the server rejects it.
+7. Sign in to the faculty panel; load submissions, generate an AI draft, edit marks/feedback and approve release.
+8. Retrieve released feedback using the matching roll number and receipt code.
+9. Open assignment management; change a test assignment's due date/status and confirm the student list updates.
+10. Refresh analytics, export the CSV and inspect the `CA Audit` sheet.
+11. Confirm the Exit Ticket still displays aggregated responses and does not expose individual student comments.
+
+### Important operational notes
+- The deadline is enforced server-side; a closed or unpublished assignment is not returned to the public student assignment list.
+- No-login student identity remains self-declared. A roll number is not independently verified.
+- AI feedback and scores remain provisional. Faculty must inspect the original answer and approve all final marks.
+- AI evaluation does not open Google Drive links. Faculty must open and inspect linked work manually.
+- The rate limiter is a lightweight Apps Script Cache safeguard, not a substitute for authenticated student accounts or institutional security controls.
+- The CSV export and spreadsheet contain identifiable academic records. Restrict faculty access, avoid public sharing, and follow KCET data-retention policy.
+- Test the current Gemini model/API key with `testGeminiConnection()`; a source-code deployment alone does not validate external API availability.

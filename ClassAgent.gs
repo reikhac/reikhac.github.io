@@ -1,6 +1,43 @@
 const CA={COURSE:'CS25C12 - Algorithms',TZ:'Asia/Kolkata',SHEETS:{assignments:['ID','Title','Unit','Description','DueDate','MaxMarks','Rubric','Status','CreatedAt'],submissions:['ID','AssignmentID','AssignmentTitle','Name','Roll','Answer','DriveLink','SubmittedAt','ReceiptHash','DraftMarks','AIFeedback','Status','FinalMarks','FacultyFeedback','ReleasedAt'],marks:['SubmissionID','AssignmentTitle','Name','Roll','Marks','MaxMarks','Feedback','ApprovedAt']}};
-function doGet(e){const p=e&&e.parameter||{};let r;try{if(p.action==='assignments'){r={success:true,assignments:caPublicAssignments_()}}else if(typeof getExitTicketDashboardData_==='function'){r=getExitTicketDashboardData_()}else{r={success:true,service:'KCET Class Agent',course:CA.COURSE}}}catch(x){r={success:false,error:String(x.message||x),groups:[]}}const b=JSON.stringify(r),c=String(p.callback||'');if(c&&/^[A-Za-z_$][0-9A-Za-z_$]*$/.test(c))return ContentService.createTextOutput(c+'('+b+');').setMimeType(ContentService.MimeType.JAVASCRIPT);return ContentService.createTextOutput(b).setMimeType(ContentService.MimeType.JSON)}
-function doPost(e){let r;try{const raw=e&&e.parameter&&e.parameter.payload;if(!raw)throw Error('Missing payload');r=caDispatch_(JSON.parse(raw))}catch(x){r={success:false,error:String(x.message||x)}}const safe=JSON.stringify(r).replace(/</g,'\\u003c');return HtmlService.createHtmlOutput('<!doctype html><html><body><script>parent.postMessage({type:"classAgentResponse",payload:'+safe+'},"*");</script>Processed</body></html>').setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)}
+function doGet(e){
+  const p=e&&e.parameter||{};
+  let r;
+  try{
+    if(p.action==='assignments'){
+      r={success:true,assignments:caPublicAssignments_()};
+    }else if(p.action==='apiResult'){
+      const id=String(p.id||'');
+      if(!/^[A-Za-z0-9_-]{8,100}$/.test(id))throw Error('Invalid request ID');
+      const cache=CacheService.getScriptCache(),stored=cache.get('ca_result_'+id);
+      if(stored){cache.remove('ca_result_'+id);r=JSON.parse(stored)}
+      else{r={success:false,pending:true}}
+    }else if(typeof getExitTicketDashboardData_==='function'){
+      r=getExitTicketDashboardData_();
+    }else{
+      r={success:true,service:'KCET Class Agent',course:CA.COURSE};
+    }
+  }catch(x){r={success:false,error:String(x.message||x),groups:[]}}
+  const b=JSON.stringify(r),c=String(p.callback||'');
+  if(c&&/^[A-Za-z_$][0-9A-Za-z_$]*$/.test(c))return ContentService.createTextOutput(c+'('+b+');').setMimeType(ContentService.MimeType.JAVASCRIPT);
+  return ContentService.createTextOutput(b).setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e){
+  let requestId='',result;
+  try{
+    const raw=e&&e.parameter&&e.parameter.payload;
+    if(!raw)throw Error('Missing payload');
+    const payload=JSON.parse(raw);
+    requestId=String(payload.requestId||'');
+    delete payload.requestId;
+    if(!/^[A-Za-z0-9_-]{8,100}$/.test(requestId))throw Error('Missing or invalid request ID');
+    result=caDispatch_(payload);
+  }catch(err){result={success:false,error:String(err.message||err)}}
+  if(requestId){
+    try{CacheService.getScriptCache().put('ca_result_'+requestId,JSON.stringify(result),120)}
+    catch(cacheError){result={success:false,error:'Could not store response: '+String(cacheError.message||cacheError)}}
+  }
+  return ContentService.createTextOutput('KCET Class Agent request processed.').setMimeType(ContentService.MimeType.TEXT);
+}
 function setupClassAgent(){const p=PropertiesService.getScriptProperties();let id=p.getProperty('SPREADSHEET_ID'),ss=id?SpreadsheetApp.openById(id):SpreadsheetApp.create('KCET Class Agent - CS25C12');if(!id)p.setProperty('SPREADSHEET_ID',ss.getId());Object.keys(CA.SHEETS).forEach(k=>{const n=k==='assignments'?'CA Assignments':k==='submissions'?'CA Submissions':'CA Marks';let s=ss.getSheetByName(n);if(!s)s=ss.insertSheet(n);if(!s.getLastRow()){s.appendRow(CA.SHEETS[k]);s.setFrozenRows(1);s.getRange(1,1,1,CA.SHEETS[k].length).setFontWeight('bold')}});if(!p.getProperty('CA_DRIVE_FOLDER_ID')){const f=DriveApp.createFolder('KCET Class Agent - CS25C12 Submissions');p.setProperty('CA_DRIVE_FOLDER_ID',f.getId())}Logger.log('Setup complete: '+ss.getUrl());Logger.log('Add GEMINI_API_KEY and FACULTY_PASSWORD_SHA256 in Script Properties.')}
 function caDispatch_(p){switch(p.action){case'login':return caLogin_(p.password);case'createAssignment':caAuth_(p.token);return caCreate_(p);case'submit':return caSubmit_(p);case'ask':return{success:true,answer:caGemini_('You are KCET Class Agent for undergraduate CS25C12 Algorithms. Explain concepts clearly with examples and pseudocode, encourage learning, do not fabricate references, redirect unrelated questions to Algorithms. Question: '+String(p.question||'').slice(0,2000))};case'facultySubmissions':caAuth_(p.token);return{success:true,submissions:caSubmissions_()};case'evaluate':caAuth_(p.token);return caEvaluate_(p.submissionId);case'approve':caAuth_(p.token);return caApprove_(p);case'releasedMark':return caReleased_(p);default:throw Error('Unknown action')}}
 function caDb_(){const id=PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');if(!id)throw Error('Run setupClassAgent() first');return SpreadsheetApp.openById(id)}

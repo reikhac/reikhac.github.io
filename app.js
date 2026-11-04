@@ -43,7 +43,42 @@ if(input)input.value=endpoint();if($("saveExitTicketEndpoint"))$("saveExitTicket
 const caKey="cs25c12_exit_ticket_endpoint",caInput=$("classAgentEndpoint");let caToken=sessionStorage.getItem("kcet_class_agent_token")||"",caAssignments=[];
 function caEndpoint(){try{return localStorage.getItem(caKey)||""}catch(e){return""}}
 function caEscape(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function caRequest(payload,callback){const url=caEndpoint();if(!url){$("classAgentStatus").textContent="Connect your Apps Script URL first.";return}let frame=$("caPostFrame");if(!frame){frame=document.createElement("iframe");frame.name="caPostFrame";frame.id="caPostFrame";frame.hidden=true;document.body.appendChild(frame)}const form=document.createElement("form");form.method="POST";form.action=url;form.target="caPostFrame";form.style.display="none";const field=document.createElement("input");field.type="hidden";field.name="payload";field.value=JSON.stringify(payload);form.appendChild(field);const listener=event=>{if(event.source!==frame.contentWindow||!event.data||event.data.type!=="classAgentResponse")return;window.removeEventListener("message",listener);form.remove();callback(event.data.payload)};window.addEventListener("message",listener);document.body.appendChild(form);form.submit();setTimeout(()=>{window.removeEventListener("message",listener);if(form.isConnected)form.remove()},30000)}
+function caRequest(payload,callback){
+  const url=caEndpoint();
+  if(!url){$("classAgentStatus").textContent="Connect your Apps Script URL first.";return}
+  const requestId="ca_"+Date.now()+"_"+Math.random().toString(36).slice(2,12);
+  const requestPayload=Object.assign({},payload,{requestId});
+  let frame=$("caPostFrame");
+  if(!frame){frame=document.createElement("iframe");frame.name="caPostFrame";frame.id="caPostFrame";frame.hidden=true;document.body.appendChild(frame)}
+  const form=document.createElement("form");form.method="POST";form.action=url;form.target="caPostFrame";form.style.display="none";
+  const field=document.createElement("input");field.type="hidden";field.name="payload";field.value=JSON.stringify(requestPayload);form.appendChild(field);
+  document.body.appendChild(form);
+  try{form.submit()}catch(err){form.remove();callback({success:false,error:"Could not send request to Apps Script: "+err.message});return}
+  setTimeout(()=>form.remove(),1500);
+  let attempts=0,finished=false;
+  const poll=()=>{
+    if(finished)return;
+    attempts++;
+    const cb="caResult_"+requestId.replace(/[^A-Za-z0-9_]/g,"");
+    const script=document.createElement("script");
+    let settled=false;
+    const cleanup=()=>{if(settled)return;settled=true;delete window[cb];script.remove()};
+    window[cb]=data=>{
+      cleanup();
+      if(data&&data.pending){if(attempts<30)setTimeout(poll,700);else{finished=true;callback({success:false,error:"Apps Script did not return a result within 21 seconds. Check deployment and Executions."});}return}
+      finished=true;
+      callback(data||{success:false,error:"Apps Script returned an empty response."});
+    };
+    script.onerror=()=>{
+      cleanup();
+      if(attempts<30)setTimeout(poll,700);
+      else{finished=true;callback({success:false,error:"Could not read the Apps Script response. Check the /exec URL and deployment access."});}
+    };
+    script.src=url+(url.includes("?")?"&":"?")+"action=apiResult&id="+encodeURIComponent(requestId)+"&callback="+cb+"&_="+Date.now();
+    document.head.appendChild(script);
+  };
+  setTimeout(poll,900);
+}
 function caGet(action,callback){const url=caEndpoint();if(!url){$("classAgentStatus").textContent="Connect the Apps Script URL first.";return}const cb="caJsonp"+Date.now();window[cb]=data=>{delete window[cb];callback(data)};const script=document.createElement("script");script.src=url+(url.includes("?")?"&":"?")+"action="+encodeURIComponent(action)+"&callback="+cb+"&_="+Date.now();script.onerror=()=>{delete window[cb];$("classAgentStatus").textContent="Could not reach Apps Script. Check the /exec URL and deployment access."};document.head.appendChild(script)}
 function caLoadAssignments(){caGet("assignments",data=>{if(!data||!data.success){$("classAgentStatus").textContent=data&&data.error||"Could not load assignments.";return}caAssignments=data.assignments||[];$("classAgentStatus").textContent="Connected. "+caAssignments.length+" active assignment(s).";$("agentAssignmentList").innerHTML=caAssignments.length?caAssignments.map(a=>'<article class="agent-assignment"><h4>'+caEscape(a.title)+'</h4><p><b>'+caEscape(a.unit)+'</b> · Due '+caEscape(a.dueDate)+' · '+Number(a.maxMarks)+' marks</p><p>'+caEscape(a.description)+'</p></article>').join(""):"No active assignments published yet.";$("agentAssignmentSelect").innerHTML='<option value="">Choose an assignment</option>'+caAssignments.map(a=>'<option value="'+caEscape(a.id)+'">'+caEscape(a.title)+' · '+caEscape(a.dueDate)+'</option>').join("")})}
 if(caInput){caInput.value=caEndpoint();$("saveClassAgentEndpoint").onclick=()=>{const u=caInput.value.trim();if(!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec/.test(u)){$("classAgentStatus").textContent="Enter a valid Apps Script /exec URL.";return}try{localStorage.setItem(caKey,u)}catch(e){}caLoadAssignments()};$("refreshAgentAssignments").onclick=caLoadAssignments;if(caEndpoint())caLoadAssignments()}

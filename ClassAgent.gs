@@ -1,4 +1,4 @@
-const CA={COURSE:'CS25C12 - Algorithms',TZ:'Asia/Kolkata',SHEETS:{assignments:['ID','Title','Unit','Description','DueDate','MaxMarks','Rubric','Status','CreatedAt','CO','BTL'],submissions:['ID','AssignmentID','AssignmentTitle','Name','Roll','Answer','DriveLink','SubmittedAt','ReceiptHash','DraftMarks','AIFeedback','Status','FinalMarks','FacultyFeedback','ReleasedAt'],marks:['SubmissionID','AssignmentTitle','Name','Roll','Marks','MaxMarks','Feedback','ApprovedAt'],audit:['Timestamp','Actor','Action','RecordID','Details']}};
+const CA={COURSE:'CS25C12 - Algorithms',TZ:'Asia/Kolkata',SHEETS:{assignments:['ID','Title','Unit','Description','DueDate','MaxMarks','Rubric','Status','CreatedAt','CO','BTL','AllowLate'],submissions:['ID','AssignmentID','AssignmentTitle','Name','Roll','Answer','DriveLink','SubmittedAt','ReceiptHash','DraftMarks','AIFeedback','Status','FinalMarks','FacultyFeedback','ReleasedAt'],marks:['SubmissionID','AssignmentTitle','Name','Roll','Marks','MaxMarks','Feedback','ApprovedAt'],audit:['Timestamp','Actor','Action','RecordID','Details']}};
 function doGet(e){
   const p=e&&e.parameter||{};
   let r;

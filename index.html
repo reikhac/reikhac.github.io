@@ -32,6 +32,7 @@
         <a href="#schedule" class="nav-link">Weekly Schedule</a>
         <a href="#algorithm-lab" class="nav-link">Algorithm Lab</a>
         <a href="#exit-ticket" class="nav-link">Exit Ticket</a>
+        <a href="#class-agent" class="nav-link">Class Agent</a>
       </nav>
     </div>
   </header>
@@ -541,6 +542,74 @@
             <a href="https://edu.smartfigure.in/department/cse/" target="_blank" class="btn btn-outline" rel="noopener noreferrer">SmartFigure AU CSE Papers</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- KCET Class Agent -->
+    <section id="class-agent" class="section bg-light">
+      <div class="container">
+        <div class="section-header"><h2>KCET Class Agent</h2><p>Your course companion for assignments, doubt support, submissions and faculty-reviewed assessment.</p></div>
+        <div class="agent-notice"><strong>Student access:</strong> No account required. Enter your name and roll number when submitting. Keep your receipt code private to view released feedback.</div>
+        <div class="agent-config card">
+          <label for="classAgentEndpoint">Google Apps Script Web App URL</label>
+          <div class="agent-inline"><input id="classAgentEndpoint" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="url"><button class="btn btn-primary" id="saveClassAgentEndpoint" type="button">Connect</button></div>
+          <small>Use the deployed Apps Script endpoint configured for the Class Agent and Daily Exit Ticket.</small>
+          <p id="classAgentStatus" class="agent-status" role="status" aria-live="polite">Not connected yet.</p>
+        </div>
+        <div class="agent-grid">
+          <article class="card agent-card">
+            <div class="agent-card-heading"><span class="agent-icon">✦</span><div><h3>Ask the Class Agent</h3><p>Guided help with CS25C12 Algorithms.</p></div></div>
+            <label for="agentQuestion">Your question</label><textarea id="agentQuestion" rows="3" placeholder="e.g., Explain Prim's and Kruskal's algorithms."></textarea>
+            <button class="btn btn-primary" id="askClassAgent" type="button">Ask question</button>
+            <div id="agentAnswer" class="agent-answer" aria-live="polite">Ask a course-related question to begin.</div>
+          </article>
+          <article class="card agent-card">
+            <div class="agent-card-heading"><span class="agent-icon">▤</span><div><h3>Assignments</h3><p>View active tasks and deadlines.</p></div></div>
+            <button class="btn btn-outline" id="refreshAgentAssignments" type="button">Refresh assignments</button>
+            <div id="agentAssignmentList" class="agent-assignment-list" aria-live="polite">Connect the Class Agent to load assignments.</div>
+          </article>
+          <article class="card agent-card">
+            <div class="agent-card-heading"><span class="agent-icon">↥</span><div><h3>Submit an Assignment</h3><p>Submit an answer or a shareable Google Drive link.</p></div></div>
+            <form id="agentSubmissionForm">
+              <label for="agentStudentName">Student name</label><input id="agentStudentName" required maxlength="100" placeholder="Your full name">
+              <label for="agentRollNumber">College roll number</label><input id="agentRollNumber" required maxlength="40" placeholder="Your roll number">
+              <label for="agentAssignmentSelect">Select assignment</label><select id="agentAssignmentSelect" required><option value="">Load assignments first</option></select>
+              <label for="agentSubmissionText">Answer / explanation</label><textarea id="agentSubmissionText" rows="4" maxlength="12000" placeholder="Write your solution, algorithm, complexity analysis and observations..."></textarea>
+              <label for="agentDriveLink">Google Drive file link (optional)</label><input id="agentDriveLink" type="url" placeholder="https://drive.google.com/...">
+              <button class="btn btn-primary" type="submit">Submit assignment</button>
+            </form>
+            <div id="agentSubmissionResult" class="agent-answer" aria-live="polite"></div>
+          </article>
+          <article class="card agent-card">
+            <div class="agent-card-heading"><span class="agent-icon">✓</span><div><h3>Check Released Feedback</h3><p>Use your private submission receipt code.</p></div></div>
+            <label for="agentReceiptRoll">Roll number</label><input id="agentReceiptRoll" maxlength="40" placeholder="Your roll number">
+            <label for="agentReceiptCode">Receipt code</label><input id="agentReceiptCode" maxlength="80" placeholder="Keep this code private">
+            <button class="btn btn-outline" id="checkAgentMark" type="button">Check feedback</button>
+            <div id="agentMarkResult" class="agent-answer" aria-live="polite"></div>
+          </article>
+        </div>
+        <div class="card faculty-panel">
+          <div class="agent-card-heading"><span class="agent-icon">♙</span><div><h3>Faculty Control Panel</h3><p>Protected access for assignment publishing, AI-assisted evaluation and mark approval.</p></div></div>
+          <div id="facultyLoginPanel"><label for="facultyPassword">Faculty password</label><div class="agent-inline"><input id="facultyPassword" type="password" autocomplete="current-password" placeholder="Enter faculty password"><button class="btn btn-primary" id="facultyLogin" type="button">Faculty sign in</button></div></div>
+          <div id="facultyWorkspace" hidden>
+            <div class="agent-inline faculty-toolbar"><strong>Faculty workspace</strong><button class="btn btn-outline" id="facultyLogout" type="button">Sign out</button></div>
+            <div class="faculty-grid">
+              <form id="agentCreateAssignment">
+                <h4>Publish an assignment</h4>
+                <label for="newAssignmentTitle">Title</label><input id="newAssignmentTitle" required maxlength="160" placeholder="e.g., Dijkstra's Shortest Path Analysis">
+                <label for="newAssignmentUnit">Unit</label><select id="newAssignmentUnit"><option>Unit I</option><option>Unit II</option><option>Unit III</option><option>Unit IV</option><option>Unit V</option><option>Unit VI</option></select>
+                <label for="newAssignmentDescription">Instructions</label><textarea id="newAssignmentDescription" rows="3" required maxlength="4000"></textarea>
+                <label for="newAssignmentDue">Due date</label><input id="newAssignmentDue" type="date" required>
+                <label for="newAssignmentMarks">Maximum marks</label><input id="newAssignmentMarks" type="number" min="1" max="100" value="10" required>
+                <label for="newAssignmentRubric">Evaluation rubric</label><textarea id="newAssignmentRubric" rows="3" placeholder="Correctness 40%; explanation 25%; complexity 20%; presentation 15%"></textarea>
+                <button class="btn btn-primary" type="submit">Publish assignment</button>
+              </form>
+              <div><h4>Submission review</h4><button class="btn btn-outline" id="loadAgentSubmissions" type="button">Load submissions</button><div id="agentSubmissionReview" class="agent-assignment-list" aria-live="polite">Sign in to review submissions.</div></div>
+            </div>
+          </div>
+          <p id="facultyStatus" class="agent-status" role="status" aria-live="polite"></p>
+        </div>
+        <p class="agent-disclosure">AI feedback is advisory and may contain errors. Faculty must inspect the submitted work, verify the rubric and approve every mark before release. Do not submit sensitive personal information.</p>
       </div>
     </section>
   </main>

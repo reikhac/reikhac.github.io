@@ -740,7 +740,7 @@ section[id]{scroll-margin-top:82px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 
-/* KCET Class Agent */
+/* KCET Assignment & Learning Agent */
 .agent-notice{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #2563eb;padding:1rem 1.2rem;border-radius:10px;margin-bottom:1.25rem;color:#1e3a8a}
 .agent-config{margin-bottom:1.5rem}.agent-config label,.agent-card label,.faculty-panel label{display:block;font-weight:600;font-size:.9rem;margin:.8rem 0 .35rem;color:var(--text-heading)}
 .agent-config small{display:block;color:var(--text-muted);margin-top:.5rem}.agent-inline{display:flex;gap:.65rem;align-items:center;flex-wrap:wrap}.agent-inline input{flex:1;min-width:180px}
@@ -759,3 +759,11 @@ section[id]{scroll-margin-top:82px}
 .faculty-review-section{margin-top:1.5rem;padding-top:.25rem}
 .faculty-section-divider{height:1px;background:var(--border-color);margin:1.4rem 0}
 .faculty-review-section .agent-card-heading{margin-bottom:1rem}
+
+
+/* Assignment Agent and separate Student Corner */
+.agent-subheading{margin:1.7rem 0 1rem;text-align:left}
+.agent-subheading h3{font-size:1.35rem;color:var(--text-heading);margin-bottom:.25rem}
+.student-corner-grid{grid-template-columns:minmax(0,820px);justify-content:center}
+.student-doubt-card{border-top:4px solid #2563eb}
+.student-doubt-card .agent-disclosure{padding:.85rem 1rem;background:#f8fafc;border-radius:8px}

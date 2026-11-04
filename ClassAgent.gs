@@ -17,16 +17,37 @@ function caFind_(id){const s=caSh_('CA Submissions'),r=s.getDataRange().getValue
 function caEvaluate_(id){const x=caFind_(id),r=x.data,all=caRows_('CA Assignments').slice(1),a=all.find(v=>String(v[0])===String(r[1]));if(!a)throw Error('Assignment not found');const max=Number(a[5]);const prompt='Evaluate this undergraduate Algorithms submission against the rubric. Give provisional score 0-'+max+', evidence-based feedback, strengths and gaps. If only a Drive link is supplied, do not claim to have opened it; say faculty must inspect it and assign no assumed score. Return only JSON {"score":number,"feedback":"...","strengths":"...","gaps":"..."}. Assignment: '+a[1]+' Instructions: '+a[3]+' Rubric: '+a[6]+' Answer: '+r[5]+' Drive link (not opened): '+r[6];const raw=caGemini_(prompt),clean=raw.replace(/^\x60{3}json\s*|\x60{3}\s*$/g,''),v=JSON.parse(clean),score=Math.max(0,Math.min(max,Number(v.score)));if(!Number.isFinite(score))throw Error('AI score invalid');const fb='PROVISIONAL AI FEEDBACK — '+(v.feedback||'')+'\nStrengths: '+(v.strengths||'')+'\nGaps: '+(v.gaps||'');x.s.getRange(x.row,10).setValue(score);x.s.getRange(x.row,11).setValue(fb);x.s.getRange(x.row,12).setValue('AI Draft — Faculty Review Required');return{success:true,score,feedback:fb}}
 function caApprove_(p){const x=caFind_(p.submissionId),r=x.data,max=caMax_(String(r[1])),m=Number(p.marks);if(!Number.isFinite(m)||m<0||m>max)throw Error('Marks must be between 0 and '+max);const fb=String(p.feedback||r[10]||'Faculty approved');x.s.getRange(x.row,12).setValue('Released');x.s.getRange(x.row,13).setValue(m);x.s.getRange(x.row,14).setValue(fb);x.s.getRange(x.row,15).setValue(new Date());caSh_('CA Marks').appendRow([r[0],r[2],r[3],r[4],m,max,fb,new Date()]);return{success:true}}
 function caReleased_(p){const roll=String(p.roll||'').trim(),receipt=String(p.receiptCode||'').trim();if(!roll||!receipt)throw Error('Enter roll number and receipt code');const h=caHash_(receipt+'|'+roll.toLowerCase()),r=caRows_('CA Submissions').slice(1).find(x=>String(x[4]).toLowerCase()===roll.toLowerCase()&&String(x[8])===h);if(!r)throw Error('No matching record; check both values');if(r[11]!=='Released')return{success:true,released:false};return{success:true,released:true,assignment:String(r[2]),marks:Number(r[12]),maxMarks:caMax_(String(r[1])),feedback:String(r[13])}}
-function caGemini_(prompt){const key=PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');if(!key)throw Error('GEMINI_API_KEY is missing in Script Properties');const url='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+encodeURIComponent(key),res=UrlFetchApp.fetch(url,{method:'post',contentType:'application/json',payload:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.2,maxOutputTokens:900}}),muteHttpExceptions:true}),code=res.getResponseCode(),body=JSON.parse(res.getContentText());if(code<200||code>=300)throw Error('Gemini API error '+code+'; check key, access and quota');const out=body.candidates&&body.candidates[0]&&body.candidates[0].content.parts.map(x=>x.text||'').join('');if(!out)throw Error('Gemini returned an empty response');return out.trim()}
-function caHash_(s){return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,String(s),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('')}
-function printFacultyPasswordHashOnce() {
-  const password = 'YourStrongPassword@2026';
-
-  const hash = Utilities.computeDigest(
-    Utilities.DigestAlgorithm.SHA_256,
-    password,
-    Utilities.Charset.UTF_8
-  ).map(b => ('0' + (b & 255).toString(16)).slice(-2)).join('');
-
-  console.log(hash);
+function caGemini_(prompt){
+  const key=PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+  if(!key)throw Error('GEMINI_API_KEY is missing in Script Properties. Add it under Project Settings > Script Properties.');
+  const url='https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
+  const response=UrlFetchApp.fetch(url,{
+    method:'post',
+    contentType:'application/json',
+    headers:{'x-goog-api-key':key},
+    payload:JSON.stringify({
+      contents:[{parts:[{text:String(prompt)}]}],
+      generationConfig:{temperature:0.2,maxOutputTokens:1200}
+    }),
+    muteHttpExceptions:true
+  });
+  const status=response.getResponseCode();
+  const raw=response.getContentText();
+  let body;
+  try{body=JSON.parse(raw)}catch(parseError){throw Error('Gemini returned a non-JSON response (HTTP '+status+'). Check the Apps Script execution log.')}
+  if(status<200||status>=300){
+    const apiMessage=body&&body.error&&body.error.message?body.error.message:raw.slice(0,700);
+    throw Error('Gemini API HTTP '+status+': '+apiMessage);
+  }
+  const candidate=body&&body.candidates&&body.candidates[0];
+  const parts=candidate&&candidate.content&&candidate.content.parts;
+  const out=parts?parts.map(part=>part.text||'').join(''):'';
+  if(!out)throw Error('Gemini returned no text. Finish reason: '+(candidate&&candidate.finishReason||'unknown'));
+  return out.trim();
 }
+function testGeminiConnection(){
+  const answer=caGemini_('Reply with exactly: KCET Gemini connection successful');
+  Logger.log(answer);
+  return answer;
+}
+function caHash_(s){return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,String(s),Utilities.Charset.UTF_8).map(b=>('0'+(b&255).toString(16)).slice(-2)).join('')}

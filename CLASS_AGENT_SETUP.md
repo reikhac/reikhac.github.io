@@ -26,3 +26,15 @@ Publish a test assignment, submit a dummy answer, save the receipt code, sign in
 - AI scores are provisional; faculty approval is mandatory. AI cannot open or inspect Drive links in this starter version; faculty must inspect linked files directly.
 - Student submissions accept typed answers and Google Drive share links. A private text record is created in the faculty-owned Drive folder for each submission. The AI does not open linked files; faculty must inspect any student-provided Drive link and ensure it is shared with the faculty account according to institutional policy. Direct binary file upload is not included in this first release.
 - Test with dummy records and obtain institutional IT/data-protection approval before using official marks. Back up the spreadsheet and review access permissions regularly.
+
+## Gemini API connection test (updated November 2026)
+Google's current Gemini API guidance uses the `x-goog-api-key` HTTP header for REST requests and new AI Studio keys are authorization keys. The current Class Agent backend uses that header and the `gemini-3.6-flash` model. See the official [Gemini API key guide](https://ai.google.dev/gemini-api/docs/generate-content/api-key).
+
+After updating `ClassAgent.gs` in Apps Script and saving:
+1. In Project Settings → Script Properties, confirm the property name is exactly `GEMINI_API_KEY` (no spaces) and the value is the complete key, with no quotation marks or leading/trailing spaces.
+2. In the Apps Script editor, select `testGeminiConnection` and click Run. Approve the external request permission if prompted.
+3. Open **Executions** (left sidebar) and inspect the latest run. A successful test logs `KCET Gemini connection successful`. If it fails, the exception now includes the Gemini HTTP status and Google API error message.
+4. After a successful test, deploy the web app again using Deploy → Manage deployments → Edit → New version → Deploy. The Script Property itself does not require a deployment, but code changes do.
+5. Re-test **Ask the Class Agent** and **AI evaluate** on the website.
+
+Do not paste the API key into GitHub, website JavaScript, or a chat. Do not share execution logs if they contain secrets.

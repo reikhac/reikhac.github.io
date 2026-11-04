@@ -92,7 +92,8 @@
     if($("caRefreshAnalytics"))$("caRefreshAnalytics").addEventListener("click",loadAnalytics);
     if($("caLoadManage"))$("caLoadManage").addEventListener("click",loadManager);
     if($("caExportSubmissions"))$("caExportSubmissions").addEventListener("click",exportSubmissions);
-    if($("facultyLogin"))$("facultyLogin").addEventListener("click",()=>setTimeout(()=>{if(token()){loadAnalytics();loadManager();}},1200));
+    window.addEventListener("caFacultySignedIn",()=>{loadAnalytics();loadManager();});
+    window.addEventListener("caAssignmentsUpdated",getPublicAssignments);
     if($("loadAgentSubmissions"))$("loadAgentSubmissions").addEventListener("click",()=>setTimeout(loadAnalytics,1800));
     if(token()){loadAnalytics();loadManager();}
   });

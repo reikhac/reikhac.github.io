@@ -50,7 +50,7 @@ function caSubmit_(p){
   const name=String(p.name||'').trim(),roll=String(p.roll||'').trim(),aid=String(p.assignmentId||''),fileName=String(p.fileName||'').trim(),mime=String(p.mimeType||'').trim().toLowerCase(),encoded=String(p.fileBase64||'');
   if(!name||!roll||!aid||!fileName||!encoded)throw Error('Enter your name and roll number, select an assignment and attach one file');
   if(name.length>100||roll.length>40||fileName.length>180)throw Error('Input too long');
-  const ext=(fileName.match(/\\.([^.]+)$/)||[])[1],allowed={pdf:'application/pdf',doc:'application/msword',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',ppt:'application/vnd.ms-powerpoint',pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation',xls:'application/vnd.ms-excel',xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',zip:'application/zip'};
+  const ext=(fileName.match(/\.([^.]+)$/)||[])[1],allowed={pdf:'application/pdf',doc:'application/msword',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',ppt:'application/vnd.ms-powerpoint',pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation',xls:'application/vnd.ms-excel',xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',zip:'application/zip'};
   if(!ext||!allowed[ext.toLowerCase()])throw Error('Unsupported file type. Upload PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX or ZIP');
   if(encoded.length>Math.ceil(8*1024*1024*4/3)+8)throw Error('File exceeds the 8 MB upload limit');
   if(mime&&mime!=='application/octet-stream'&&mime!==allowed[ext.toLowerCase()])throw Error('The file type does not match its extension. Please select the original file');

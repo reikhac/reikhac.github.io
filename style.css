@@ -816,7 +816,8 @@ section[id]{scroll-margin-top:82px}
 
 /* Learn by Doing heading hierarchy */
 .algorithm-studio .lab-eyebrow{
-  font-size:clamp(1rem,1.6vw,1.2rem);
+  font-size:clamp(1.7rem,3vw,2.25rem);
+  letter-spacing:-.045em;
 }
 .algorithm-studio .section-header h2{
   font-size:clamp(1.35rem,2.1vw,1.65rem);

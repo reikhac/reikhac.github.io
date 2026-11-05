@@ -798,3 +798,9 @@ section[id]{scroll-margin-top:82px}
   .student-dashboard .agent-config .agent-inline input{min-width:100%}
   .student-dashboard .student-doubt-card{padding:1.2rem}
 }
+
+
+/* Course Outcomes — horizontal sequence */
+.co-sequence{display:flex;align-items:center;justify-content:center;gap:clamp(.55rem,2vw,1.35rem);flex-wrap:nowrap;margin:0 0 1.5rem;padding:1rem 1.25rem;background:#f0f5ff;border:1px solid #dce7f8;border-radius:12px;color:#315fce;font:700 clamp(.82rem,1.8vw,1rem)/1.2 'Fira Code',monospace;white-space:nowrap}
+.co-sequence .co-arrow{color:#8ba3cf;font-size:1.15em}
+@media(max-width:520px){.co-sequence{gap:.35rem;padding:.85rem .55rem;font-size:.76rem}.co-sequence .co-arrow{font-size:1em}}

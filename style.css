@@ -813,3 +813,11 @@ section[id]{scroll-margin-top:82px}
 .co-card p{margin:0;flex:1}
 .co-grid .span-two{grid-column:auto}
 @media(max-width:520px){.co-card{gap:.7rem;padding:.9rem}.co-card .co-id{flex-basis:48px}}
+
+/* Learn by Doing heading hierarchy */
+.algorithm-studio .lab-eyebrow{
+  font-size:clamp(1rem,1.6vw,1.2rem);
+}
+.algorithm-studio .section-header h2{
+  font-size:clamp(1.35rem,2.1vw,1.65rem);
+}

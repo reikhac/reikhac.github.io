@@ -10,7 +10,7 @@ unit6:[["Flow originates at the:",["Sink","Source","Cut","Residual edge"],1],["F
 };
 const qbox=$("quizContainer"),us=$("unitSelect");
 function quiz(){if(!qbox||!us)return;if(!us.value){qbox.innerHTML='<p class="quiz-empty">Please select a unit above to display its formative quiz questions.</p>';return}const qs=bank[us.value]||[];qbox.innerHTML=qs.map((q,i)=>'<article class="quiz-card"><p class="quiz-question">'+(i+1)+'. '+q[0]+'</p><div class="quiz-options">'+q[1].map((o,j)=>'<button class="opt-btn" data-q="'+i+'" data-a="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>').join("")+'</div><p class="quiz-feedback" id="fb'+i+'"></p></article>').join("");qbox.querySelectorAll(".opt-btn").forEach(b=>b.addEventListener("click",()=>{const i=+b.dataset.q,a=+b.dataset.a,c=qs[i][2],card=b.closest(".quiz-card");if(card.dataset.done)return;card.dataset.done="1";card.querySelectorAll("button").forEach(x=>{x.disabled=true;if(+x.dataset.a===c)x.classList.add("correct")});if(a!==c)b.classList.add("wrong");const f=$("fb"+i);f.textContent=a===c?"Correct!":"Correct answer: "+String.fromCharCode(65+c)+". "+qs[i][1][c];f.className="quiz-feedback "+(a===c?"success":"error")}))}
-if(us){us.addEventListener("change",quiz);quiz()}
+if(us){us.selectedIndex=0;us.value="";us.addEventListener("change",quiz);quiz()}
 document.querySelectorAll(".accordion-btn").forEach(b=>b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")==="true";b.setAttribute("aria-expanded",String(!open));b.nextElementSibling.classList.toggle("show",!open)}));
 const mt=$("menuToggle"),nm=$("navMenu");if(mt&&nm){mt.onclick=()=>nm.classList.toggle("open");nm.querySelectorAll("a").forEach(a=>a.onclick=()=>nm.classList.remove("open"))}
 // Bubble sort visualiser
